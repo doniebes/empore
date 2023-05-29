@@ -6,7 +6,22 @@
 	<!-- Content Header (Page header) -->
 	<section class="content-header">
 		<!-- ========== Breadcrumbs Start ========== -->
-		<?php //$this->load->view('manage/breadcrumbs'); ?>
+		<div class="card-header card-header-content-sm-between">
+			<h1 class="card-header-title mb-2 mb-sm-0">
+				<?= isset($title) ? '' . $title : null; ?>
+				<small>List</small>
+			</h1>
+			<!-- Nav -->
+			<ul class="nav nav-segment nav-fill">
+				<li class="nav-item">
+					<a class="nav-link " href="#" >Home</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link active "><?= isset($title) ? '' . $title : null; ?></a>
+				</li>
+			</ul>
+			<!-- End Nav -->
+		</div>
 		<!-- ========== Breadcrumbs End ========== -->
 	</section>
 	<div class="mt-2">
@@ -17,9 +32,7 @@
 					data-bs-target="#addClass">
 					<i class="fa fa-plus"></i> Tambah
 			</button>
-			<!-- <a href="<?//= site_url('manage/book/book_post') ?>" 
-				class="btn btn-sm btn-success"><i class="fa fa-plus"></i> Test POST via API
-			</a> -->
+			
 		</div>
 		<!-- /.card-header -->
 	</div>
@@ -106,10 +119,15 @@
 			<div class="modal-dialog modal-sm">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h4 class="modal-title">Tambah Buku</h4>
+						<h4 class="modal-title">{{ isset($book) ? 'Edit Buku' : 'Tambah Buku Baru' }}</h4>
 						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>						
 					</div>
-					<?//= form_open('manage/book/add', array('method'=>'post')); ?>
+					<form action="{{ isset($book) ? route('books.update', $book->book_id) : route('books.store') }}" method="POST">
+					@csrf
+
+					@if (isset($book))
+						@method('PUT')
+					@endif
 					<div class="modal-body">
 						<input type="hidden" name="book_id" id="book_id" class="form-control" readonly>
 						<div id="p_scents_class">
@@ -136,10 +154,10 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button type="submit" class="btn btn-primary">Simpan</button>
+						<button type="submit" class="btn btn-primary">{{ isset($book) ? 'Update' : 'Simpan' }}</button>
 						<button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
 					</div>
-					<?//= form_close(); ?>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -154,7 +172,7 @@
 						<h4 class="modal-title"><span class="fa fa-warning"></span> Konfirmasi Hapus</h4>
 						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
-					<form action="<?php //echo site_url('manage/book/delete') ?>" method="POST">
+					<form action="#" method="POST">
 						<div class="modal-body">
 							<p>Apakah anda akan menghapus data ini ?</p>
 							<input type="hidden" name="book_id" id="bookID">
@@ -192,7 +210,7 @@
                         <!-- Media -->
                         <div class="d-flex">
                             <div class="flex-shrink-0">
-                            <img class="avatar avatar-lg" src="<?//= site_url() ?>media/front/assets/img/400x400/img22.jpg" alt="Image Description">
+                            <img class="avatar avatar-lg" src="{{ asset('front/assets/img/400x400/img22.jpg') }}" alt="Image Description">
                             </div>
 
                             <div class="flex-grow-1 ms-4">
@@ -243,51 +261,11 @@
 		
 	</div>
 
-<!-- <script>
-$(document).ready(function(){
-	<?php //foreach($books as $row): ?>
-		$('#viewBtn<?//= $row['book_id'];?>').click(function(){
-			var book_id = $(this).data('book_id');
-			var book_title = $(this).data('book_title');	
-            var book_author = $(this).data('book_author');	
-            var book_stock = $(this).data('book_stock');	
-            var book_code = $(this).data('book_code');	
-			$('#book_id').val(book_id);
-			$('#book_title').html(book_title);
-            $('#book_author').val(book_author);
-            $('#book_stock').val(book_stock);
-            $('#book_code').val(book_code);
-		});
-	<?php //endforeach; ?>
-});
-</script> -->
 
 <script>
 	function getId(id) {
 		$('#bookID').val(id)
 	}
 </script>
-	
-
-<!-- <script>
-$(document).ready(function(){
-	<?php //foreach($books as $row): ?>
-		$('#editBtn<?//= $row['book_id'];?>').click(function(){
-			var book_id = $(this).data('book_id');
-			var code = $(this).data('code');	
-			var title = $(this).data('title');	
-			var publication_year = $(this).data('publication_year');	
-			var author = $(this).data('author');	
-			var stock = $(this).data('stock');	
-			$('#book_id').val(book_id);
-			$('#code').val(code);
-			$('#title').val(title);
-			$('#publication_year').val(publication_year);
-			$('#author').val(author);
-			$('#stock').val(stock);
-		});
-	<?php //endforeach; ?>
-});
-</script> -->
 
 @endsection
