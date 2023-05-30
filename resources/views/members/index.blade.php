@@ -45,68 +45,63 @@
 							<thead class="bg-soft-dark">
 								<tr>
 									<th>No</th>
-									<th>Kode Buku</th>
-									<th>Judul Buku</th>									
-									<th>Tahun Terbit</th>
-									<th>Penulis</th>
-									<th>Stock</th>
+									<th>Member ID#</th>
+									<th>Nama</th>									
+									<th>Alamat</th>
+									<th>Status</th>
 									<th>Aksi</th>
 								</tr>
 							</thead>
 							<tbody>
 
-                            @if ($books->isEmpty())
-                            <tr id="row">
-                                <td colspan="7" align="center">Data Kosong</td>
-                            </tr>
-                            @else
+								@if ($members->isEmpty())
+								<tr id="row">
+									<td colspan="6" align="center">Data Kosong</td>
+								</tr>
+								@else
 									<?php $i=1 ?>
-                                    @foreach ($books as $book)									
+                                    @foreach ($members as $member)									
 										<tr>
 											<td><?= $i ?></td>
-											<td>{{ $book->code }}</td>
-											<td>{{ $book->title }}</td>											
-											<td>{{ $book->publication_year }}</td>
-											<td>{{ $book->author }}</td>
-											<td>{{ $book->stock }}</td>
+											<td>{{ $member->member_id }}</td>
+											<td>{{ $member->member_name }}</td>											
+											<td>{{ Illuminate\Support\Str::limit($member->member_address,15) }}</td>
+											<td>{{ $member->is_active }}</td>
 											<td>
 												<button type="button" 
                                                         class="btn btn-warning btn-xs" 
                                                         data-bs-toggle="modal" 
                                                         data-bs-target="#addClass"
-                                                        data-book_id="{{ $book->book_id }}"
-														data-code="{{ $book->code }}"
-														data-title="{{ $book->title }}"
-														data-publication_year="{{ $book->publication_year }}"
-														data-author="{{ $book->author }}"		
-														data-stock="{{ $book->stock }}"													
-                                                        id="editBtn{{ $book->book_id }}" 
+                                                        data-member_id="{{ $member->member_id }}"
+														data-member_name="{{ $member->member_name }}"
+														data-member_address="{{ $member->member_address }}"
+														data-is_active="{{ $member->is_active }}"												
+                                                        id="editBtn{{ $member->member_id }}" 
                                                         title="Edit Kelas"><i class="fa fa-pencil"></i>
                                                 </button>
 												<button type="button" 
 														class="btn btn-danger btn-xs" 
 														data-bs-toggle="modal" 
 														data-bs-target="#delModal"
-														onclick="return getId({{ $book->book_id }})"
+														onclick="return getId({{ $member->member_id }})"
 														title="Hapus"><i class="fa fa-trash"></i>
 												</button>
 												<button type="button" 
 													class="btn btn-info btn-xs" 
 													data-bs-toggle="modal" 
 													data-bs-target="#viewDetail"
-													data-book_id="{{ $book->book_id }}"
-													data-book_title="{{ $book->title }}"
-													data-book_author="{{ $book->author }}"
-													data-book_code="{{ $book->code }}"
-													data-book_stock="{{ $book->stock }}"
-													id="viewBtn{{ $book->book_id }}" 
+													data-member_id="{{ $member->member_id }}"
+													data-member_name="{{ $member->member_name }}"
+													data-member_address="{{ $member->member_address }}"
+													data-is_active="{{ $member->is_active }}"													
+													id="viewBtn{{ $member->member_id }}" 
 													title="View"><i class="fa fa-eye"></i>
 												</a>
 											</td>	
 										</tr>
 											<?php $i++ ?>
                                     @endforeach
-                            @endif 
+								@endif 
 									</tbody>
 								</table>
 							</div>
@@ -127,12 +122,12 @@
 						<h4 class="modal-title" id="titleBookForm">Tambah Data</h4>
 						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>						
 					</div>
-					<form action="{{ route('books.store') }}" method="POST">
+					<form action="{{ route('members.store') }}" method="POST">
 					@csrf
 						@method('POST')
 				
 					<div class="modal-body">
-						<input type="hidden" name="book_id" id="book_id" class="form-control" readonly>
+						<input type="hidden" name="member_id" id="member_id" class="form-control" readonly>
 						<div id="p_scents_class">
 							<div class="form-group mb-3">	
 								<label>Kode Buku</label>
@@ -175,7 +170,7 @@
 						<h4 class="modal-title"><span class="fa fa-warning"></span> Konfirmasi Hapus</h4>
 						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
-					<form action="{{ route('books.destroy', $book->book_id) }}" method="POST">
+					<form action="{{ route('members.destroy', $member->member_id) }}" method="POST">
 						@csrf
 						@method('DELETE')
 						<div class="modal-body">
@@ -270,7 +265,7 @@ $(document).ready(function(){
 	$('#addBtn').click(function(){
 		$('#titleBookForm').text('Tambah Data'); // Set judul modal
 		$('#btnBookForm').text('Tambah Data');
-		$('#book_id').val('');
+		$('#member_id').val('');
 		$('#code').val('');
 		$('#title').val('');
 		$('#publication_year').val('');
@@ -282,17 +277,17 @@ $(document).ready(function(){
 
 <script>
 $(document).ready(function(){
-	<?php foreach($books as $row): ?>
-		$('#editBtn<?= $row['book_id'];?>').click(function(){
+	<?php foreach($members as $row): ?>
+		$('#editBtn<?= $row['member_id'];?>').click(function(){
 			$('#titleBookForm').text('Edit Data'); // Set judul modal
 			$('#btnBookForm').text('Edit Data');
-			var book_id = $(this).data('book_id');
+			var member_id = $(this).data('member_id');
 			var code = $(this).data('code');	
 			var title = $(this).data('title');	
 			var publication_year = $(this).data('publication_year');	
 			var author = $(this).data('author');	
 			var stock = $(this).data('stock');	
-			$('#book_id').val(book_id);
+			$('#member_id').val(member_id);
 			$('#code').val(code);
 			$('#title').val(title);
 			$('#publication_year').val(publication_year);
@@ -305,14 +300,14 @@ $(document).ready(function(){
 
 <script>
 $(document).ready(function(){
-	<?php foreach($books as $row): ?>
-		$('#viewBtn<?= $row['book_id'];?>').click(function(){
-			var book_id = $(this).data('book_id');
+	<?php foreach($members as $row): ?>
+		$('#viewBtn<?= $row['member_id'];?>').click(function(){
+			var member_id = $(this).data('member_id');
 			var book_title = $(this).data('book_title');	
             var book_author = $(this).data('book_author');	
             var book_stock = $(this).data('book_stock');	
             var book_code = $(this).data('book_code');	
-			$('#book_id').val(book_id);
+			$('#member_id').val(member_id);
 			$('#book_title').html(book_title);
             $('#book_author').val(book_author);
             $('#book_stock').val(book_stock);

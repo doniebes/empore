@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Book;
+use Illuminate\Support\Facades\Session;
+use RealRashid\SweetAlert\Facades\Alert;
+
 
 class BookController extends Controller
 {
@@ -12,10 +15,11 @@ class BookController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index(){
+
         $books = Book::all();
-        return view('books.index', compact('books'));
+        $title = 'Buku';
+        return view('books.index', compact('books', 'title'));
     }
 
     /**
@@ -23,32 +27,94 @@ class BookController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
+    public function create(){
         return view('books.form');
     }
 
     /**
      * Store a newly created resource in storage.
-     *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request){
+
          // Validasi data yang diterima dari formulir
          $validatedData = $request->validate([
+            'code' => 'required',
+            'title' => 'required',
+            'author' => 'required',
+            'publication_year' => 'required',
+            'stock' => 'required'
+        ]);
+
+         // Update data buku dengan data yang diterima dari form
+         $book_id = $request->input('book_id');
+
+         if($book_id){
+            // Temukan buku berdasarkan id
+            $book = Book::find($book_id);
+
+            $book->code = $request->input('code');
+            $book->title = $request->input('title');
+            $book->author = $request->input('author');
+            $book->publication_year = $request->input('publication_year');
+            $book->stock = $request->input('stock');
+            $book->save();
+
+            if($book->save()){
+                // Redirect ke halaman yang diinginkan setelah update data success
+                return redirect()->route('books.index')->with('success', 'Book updated successfully.');
+            }else{
+                // Redirect ke halaman yang diinginkan setelah update data failed
+                return redirect()->route('books.index')->with('error', 'Book updated failed.');
+            }
+            
+         }else{
+
+            // Simpan data buku ke dalam database
+            $created = Book::create($validatedData);
+
+            if($created){
+                // Redirect ke halaman yang diinginkan setelah menyimpan data success
+                return redirect()->route('books.index')->with('success', 'Book created successfully.');
+            }else{
+                // Redirect ke halaman yang diinginkan setelah menyimpan data failed
+                return redirect()->route('books.index')->with('error', 'Book created failed.');
+            }
+
+         }
+
+    }
+
+     /**
+     * Update the specified resource in storage.
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id){
+        // Validasi data yang diterima dari form
+        $request->validate([
             'title' => 'required',
             'author' => 'required',
             'publication_year' => 'required',
         ]);
 
-        // Simpan data buku ke dalam database
-        Book::create($validatedData);
+        // Temukan buku berdasarkan id
+        $book = Book::find($id);
 
-        // Redirect ke halaman yang diinginkan setelah menyimpan data
-        return redirect()->route('books.index')->with('success', 'Book created successfully.');
-    
+        // Periksa apakah buku ditemukan
+        if ($book) {
+            // Update data buku dengan data yang diterima dari form
+            $book->title = $request->input('title');
+            $book->author = $request->input('author');
+            $book->publication_year = $request->input('publication_year');
+            $book->save();
+
+            return redirect()->route('books.index')->with('success', 'Book updated successfully.');
+        } else {
+            return redirect()->route('books.index')->with('error', 'Book not found.');
+        }
     }
 
     /**
@@ -75,38 +141,7 @@ class BookController extends Controller
         return view('books.form', compact('book'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        // Validasi data yang diterima dari form
-        $request->validate([
-            'title' => 'required',
-            'author' => 'required',
-            'publication_year' => 'required',
-        ]);
-
-        // Temukan buku berdasarkan id
-        $book = Book::find($id);
-
-        // Periksa apakah buku ditemukan
-        if ($book) {
-            // Update data buku dengan data yang diterima dari form
-            $book->title = $request->input('title');
-            $book->author = $request->input('author');
-            $book->publication_year = $request->input('publication_year');
-            $book->save();
-
-            return redirect()->route('books.index')->with('success', 'Book updated successfully.');
-        } else {
-            return redirect()->route('books.index')->with('error', 'Book not found.');
-        }
-    }
+   
 
     /**
      * Remove the specified resource from storage.

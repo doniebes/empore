@@ -611,7 +611,7 @@ window.hs_config.gulpRGBA = (p1) => {
                                 aria-expanded="false" 
                                 aria-controls="navbarVerticalMenukepegawaian">
                                 <i class="fa fa-suitcase text-stock nav-icon"></i>
-                                <span class="nav-link-title">Kepegawaian</span>
+                                <span class="nav-link-title">Master Data</span>
                             </a>
                             <div id="navbarVerticalMenukepegawaian" 
                                 class="nav-collapse collapse " 
@@ -619,12 +619,12 @@ window.hs_config.gulpRGBA = (p1) => {
                                 <div id="navbarVerticalMenukepegawaianMenu">
                                     <div class="nav-item">
                                         <a class="nav-link  " 
-                                            href="https://gomahad.dsbstudio.web.id/manage/jabatan" 
+                                            href="{{ route('books.index') }}" 
                                             role="button"  
                                             data-bs-target="#navbarVerticalMenujabatan" 
                                             aria-expanded="false" 
                                             aria-controls="navbarVerticalMenujabatan">
-                                            Jabatan
+                                            Buku
                                         </a>
                                     <div id="navbarVerticalMenujabatan" 
                                         class="data-bs-parent="#navbarVerticalMenukepegawaianMenu">
@@ -632,12 +632,12 @@ window.hs_config.gulpRGBA = (p1) => {
                                 </div>
                                 <div class="nav-item">
                                     <a class="nav-link  " 
-                                        href="https://gomahad.dsbstudio.web.id/manage/golongan" 
+                                        href="{{ route('members.index') }}" 
                                         role="button"  
                                         data-bs-target="#navbarVerticalMenugolongan" 
                                         aria-expanded="false" 
                                         aria-controls="navbarVerticalMenugolongan">
-                                        Golongan
+                                        Anggota
                                     </a>
                                     <div id="navbarVerticalMenureport_kepegawaian" 
                                         class="nav-collapse collapse 
@@ -1239,6 +1239,17 @@ window.hs_config.gulpRGBA = (p1) => {
       })()
    </script>
 
+<script>
+  $(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip(); 
+  });
+
+  //DataTable 
+  $(document).ready(function(){
+    $('#dtable').DataTable();
+  });
+</script>
+
 
 <!-- Bootstrap 3.3.7 -->
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
@@ -1282,32 +1293,43 @@ window.hs_config.gulpRGBA = (p1) => {
     todayHighlight: true
 });
 </script>
-{{--
-@php if ($this->session->flashdata('success')) { @endphp
-  <script>
-    Swal.fire({
-      position: 'top-end',
-      icon: 'success',
-      title: '@php echo $this->session->flashdata('success') @endphp',
-      showConfirmButton: false,
-      timer: 1000
-    })
-  </script>
-@php } @endphp
 
-@php if ($this->session->flashdata('failed')) { @endphp 
-  <script>
-     Swal.fire({
-        position: 'top-end',
-        icon: 'error',
-        title: '@php echo $this->session->flashdata('failed') @endphp',
-        showConfirmButton: false,
-        timer: 1000
-      })
-    
-  </script>
-@php } @endphp
---}}
+
+@php
+    $success = session('success');
+    $error = session('error');
+@endphp
+
+@if ($success)
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        Swal.fire({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            icon: 'success',
+            title: '{{ $success }}'
+        });
+    });
+</script>
+@endif
+
+@if ($error)
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        Swal.fire({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            icon: 'error',
+            title: '{{ $error }}'
+        });
+    });
+</script>
+@endif
+
 
 <script>
   $(document).ready(function(){
