@@ -588,7 +588,7 @@ window.hs_config.gulpRGBA = (p1) => {
                                 <div id="navbarVerticalMenukeuanganMenu">
                                     <div class="nav-item">
                                         <a class="nav-link  " 
-                                            href="https://gomahad.dsbstudio.web.id/manage/payout" 
+                                            href="{{ route('book_requests.index') }}" 
                                             role="button"  
                                             data-bs-target="#navbarVerticalMenupayout" 
                                             aria-expanded="false" 
