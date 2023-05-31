@@ -27,9 +27,9 @@ class MemberController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
+    public function create(){
+        $title = 'Tambah Data';
+        return view('members.form', compact('title'));
     }
 
     /**
@@ -42,48 +42,22 @@ class MemberController extends Controller
 
         // Validasi data yang diterima dari formulir
         $validatedData = $request->validate([
-           'code' => 'required',
-           'title' => 'required',
-           'author' => 'required',
-           'publication_year' => 'required',
-           'stock' => 'required'
-       ]);
+           'member_name' => 'required',
+           'member_phone' => 'required',
+           'member_email' => 'required',
+           'member_password' => 'required',
+           'member_address' => 'required'
+        ]);
 
-        // Update data buku dengan data yang diterima dari form
-        $book_id = $request->input('book_id');
+        // Simpan data buku ke dalam database
+        $created = Member::create($validatedData);
 
-        if($book_id){
-           // Temukan buku berdasarkan id
-           $book = Book::find($book_id);
-
-           $book->code = $request->input('code');
-           $book->title = $request->input('title');
-           $book->author = $request->input('author');
-           $book->publication_year = $request->input('publication_year');
-           $book->stock = $request->input('stock');
-           $book->save();
-
-           if($book->save()){
-               // Redirect ke halaman yang diinginkan setelah update data success
-               return redirect()->route('books.index')->with('success', 'Book updated successfully.');
-           }else{
-               // Redirect ke halaman yang diinginkan setelah update data failed
-               return redirect()->route('books.index')->with('error', 'Book updated failed.');
-           }
-           
+        if($created){
+            // Redirect ke halaman yang diinginkan setelah menyimpan data success
+            return redirect()->route('members.index')->with('success', 'Member created successfully.');
         }else{
-
-           // Simpan data buku ke dalam database
-           $created = Book::create($validatedData);
-
-           if($created){
-               // Redirect ke halaman yang diinginkan setelah menyimpan data success
-               return redirect()->route('books.index')->with('success', 'Book created successfully.');
-           }else{
-               // Redirect ke halaman yang diinginkan setelah menyimpan data failed
-               return redirect()->route('books.index')->with('error', 'Book created failed.');
-           }
-
+            // Redirect ke halaman yang diinginkan setelah menyimpan data failed
+            return redirect()->route('members.index')->with('error', 'Member created failed.');
         }
 
    }
@@ -105,31 +79,60 @@ class MemberController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        //
+    public function edit($id){
+        $member = Member::findOrFail($id);
+        return view('members.form', compact('member'));
     }
 
     /**
      * Update the specified resource in storage.
-     *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
+    public function update(Request $request, $id){
+        // Validasi data yang diterima dari form
+        $request->validate([
+            'member_name' => 'required',
+            'member_phone' => 'required',
+            'member_email' => 'required',
+            'member_password' => 'required',
+            'member_address' => 'required',
+        ]);
+
+        // Temukan buku berdasarkan id
+        $member = Member::find($id);
+
+        // Periksa apakah buku ditemukan
+        if ($member) {
+            // Update data buku dengan data yang diterima dari form
+            $member->member_name        = $request->input('member_name');
+            $member->member_phone       = $request->input('member_phone');
+            $member->member_email       = $request->input('member_email');
+            $member->member_password    = $request->input('member_password');
+            $member->member_address     = $request->input('member_address');
+            $member->save();
+
+            return redirect()->route('members.index')->with('success', 'Member updated successfully.');
+        } else {
+            return redirect()->route('members.index')->with('error', 'Member not found.');
+        }
     }
 
     /**
      * Remove the specified resource from storage.
-     *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
+    public function destroy($id){
+         $member = $member = Member::find($id);
+
+        // Hapus buku dari database
+        if ($member) {
+            $member->delete();
+            return redirect()->route('members.index')->with('success', 'Member deleted successfully.');
+        } else {
+            return redirect()->route('members.index')->with('error', 'Member not found.');
+        }
     }
 }

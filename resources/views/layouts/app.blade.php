@@ -580,7 +580,7 @@ window.hs_config.gulpRGBA = (p1) => {
                                 aria-expanded="false" 
                                 aria-controls="navbarVerticalMenukeuangan">
                                 <i class="fa fa-money text-stock nav-icon"></i>
-                                <span class="nav-link-title">Keuangan</span>
+                                <span class="nav-link-title">Transaksi</span>
                             </a>
                             <div id="navbarVerticalMenukeuangan" 
                                 class="nav-collapse collapse " 
@@ -593,7 +593,20 @@ window.hs_config.gulpRGBA = (p1) => {
                                             data-bs-target="#navbarVerticalMenupayout" 
                                             aria-expanded="false" 
                                             aria-controls="navbarVerticalMenupayout">
-                                            Pembayaran Siswa
+                                            Pengajuan Buku
+                                        </a>
+                                        <div id="navbarVerticalMenukonseling_prestasi" 
+                                            class="data-bs-parent="#navbarVerticalMenumanajemen_dataMenu">
+                                        </div>
+                                    </div>
+                                    <div class="nav-item">
+                                        <a class="nav-link  " 
+                                            href="https://gomahad.dsbstudio.web.id/manage/payout" 
+                                            role="button"  
+                                            data-bs-target="#navbarVerticalMenupayout" 
+                                            aria-expanded="false" 
+                                            aria-controls="navbarVerticalMenupayout">
+                                            Pengembalian Buku
                                         </a>
                                         <div id="navbarVerticalMenukonseling_prestasi" 
                                             class="data-bs-parent="#navbarVerticalMenumanajemen_dataMenu">

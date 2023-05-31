@@ -26,13 +26,10 @@
 	</section>
 	<div class="mt-2">
 		<div class="">
-			<button type="button" 
-					id="addBtn" 
-					class="btn btn-primary btn-sm" 
-					data-bs-toggle="modal" 
-					data-bs-target="#addClass">
-					<i class="fa fa-plus"></i> Tambah Data
-			</button>
+			<a href="{{ route('members.create') }}"
+				 class="btn btn-sm btn-success">
+				 <i class="fa fa-plus"></i> Tambah Data
+			</a>
 		</div>
 		<!-- /.card-header -->
 	</div>
@@ -68,17 +65,10 @@
 											<td>{{ Illuminate\Support\Str::limit($member->member_address,15) }}</td>
 											<td>{{ $member->is_active }}</td>
 											<td>
-												<button type="button" 
-                                                        class="btn btn-warning btn-xs" 
-                                                        data-bs-toggle="modal" 
-                                                        data-bs-target="#addClass"
-                                                        data-member_id="{{ $member->member_id }}"
-														data-member_name="{{ $member->member_name }}"
-														data-member_address="{{ $member->member_address }}"
-														data-is_active="{{ $member->is_active }}"												
-                                                        id="editBtn{{ $member->member_id }}" 
-                                                        title="Edit Kelas"><i class="fa fa-pencil"></i>
-                                                </button>
+												<a href="{{ route('members.edit', $member->member_id) }}"
+													class="btn btn-warning btn-xs">
+													<i class="fa fa-pencil"></i>
+												</a>
 												<button type="button" 
 														class="btn btn-danger btn-xs" 
 														data-bs-toggle="modal" 
@@ -193,56 +183,57 @@
                 <div class="modal-content">
                     <!-- Header -->
                     <div class="modal-close">
-                    <button type="button" class="btn btn-ghost-secondary btn-icon btn-sm" data-bs-dismiss="modal" aria-label="Close">
-                        <i class="bi-x-lg"></i>
-                    </button>
+						<button type="button" 
+								class="btn btn-ghost-secondary btn-icon btn-sm" 
+								data-bs-dismiss="modal" aria-label="Close">
+							<i class="bi-x-lg"></i>
+						</button>
                     </div>
                     <!-- End Header -->
 
                     <!-- Body -->
                     <div class="modal-body p-sm-5">
-
-                    <div class="mb-5">
-                        <h4 class="h2">Book Detail</h4>
-                    </div>
+						<div class="mb-5">
+							<h4 class="h2">Member Detail</h4>
+						</div>
 
                         <!-- Media -->
                         <div class="d-flex">
                             <div class="flex-shrink-0">
-                            <img class="avatar avatar-lg" src="{{ asset('front/assets/img/400x400/img22.jpg') }}" alt="Image Description">
+                            	<img class="avatar avatar-lg" src="{{ asset('img/user.png') }}" alt="Image Description">
                             </div>
 
                             <div class="flex-grow-1 ms-4">
                             <h4 id="book_title"></h4>
 
                             <div class="row mb-2">
-                                <label class="col-sm-6 col-form-label form-label">Book Code</label>
+                                <label class="col-sm-6 col-form-label form-label">Member ID</label>
                                 <div class="col-sm-6">
                                     <div class="d-flex align-items-center">									
                                         <div class="input-group">
-                                            <input type="text" class="form-control" id="book_code" readonly>
+                                            <input type="text" class="form-control" id="memberId" readonly>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="row mb-2">
-                                <label class="col-sm-6 col-form-label form-label">Author</label>
+                                <label class="col-sm-6 col-form-label form-label">Name</label>
                                 <div class="col-sm-6">
                                     <div class="d-flex align-items-center">									
                                         <div class="input-group">
-                                            <input type="text" class="form-control" id="book_author" readonly>
+                                            <input type="text" class="form-control" id="member_name" readonly>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="row mb-2">
-                                <label class="col-sm-6 col-form-label form-label">Stock</label>
+                                <label class="col-sm-6 col-form-label form-label">Address</label>
                                 <div class="col-sm-6">
                                     <div class="d-flex align-items-center">									
                                         <div class="input-group">
-                                            <input type="text" class="form-control" id="book_stock" readonly>
+                                            <input type="text" class="form-control" id="member_address" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -257,61 +248,18 @@
 			</div>
 		</div>
 		<!-- end view detail -->
-		
 	</div>
-
-<script>
-$(document).ready(function(){
-	$('#addBtn').click(function(){
-		$('#titleBookForm').text('Tambah Data'); // Set judul modal
-		$('#btnBookForm').text('Tambah Data');
-		$('#member_id').val('');
-		$('#code').val('');
-		$('#title').val('');
-		$('#publication_year').val('');
-		$('#author').val('');
-		$('#stock').val('');
-	});
-});
-</script>
-
-<script>
-$(document).ready(function(){
-	<?php foreach($members as $row): ?>
-		$('#editBtn<?= $row['member_id'];?>').click(function(){
-			$('#titleBookForm').text('Edit Data'); // Set judul modal
-			$('#btnBookForm').text('Edit Data');
-			var member_id = $(this).data('member_id');
-			var code = $(this).data('code');	
-			var title = $(this).data('title');	
-			var publication_year = $(this).data('publication_year');	
-			var author = $(this).data('author');	
-			var stock = $(this).data('stock');	
-			$('#member_id').val(member_id);
-			$('#code').val(code);
-			$('#title').val(title);
-			$('#publication_year').val(publication_year);
-			$('#author').val(author);
-			$('#stock').val(stock);
-		});
-	<?php endforeach; ?>
-});
-</script>
 
 <script>
 $(document).ready(function(){
 	<?php foreach($members as $row): ?>
 		$('#viewBtn<?= $row['member_id'];?>').click(function(){
-			var member_id = $(this).data('member_id');
-			var book_title = $(this).data('book_title');	
-            var book_author = $(this).data('book_author');	
-            var book_stock = $(this).data('book_stock');	
-            var book_code = $(this).data('book_code');	
-			$('#member_id').val(member_id);
-			$('#book_title').html(book_title);
-            $('#book_author').val(book_author);
-            $('#book_stock').val(book_stock);
-            $('#book_code').val(book_code);
+			var memberId = $(this).data('member_id');
+			var member_name = $(this).data('member_name');	
+            var member_address = $(this).data('member_address');	
+			$('#memberId').val(memberId);
+			$('#member_name').val(member_name);
+            $('#member_address').val(member_address);
 		});
 	<?php endforeach; ?>
 });

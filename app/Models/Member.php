@@ -15,7 +15,6 @@ class Member extends Model
                             'member_address', 
                             'member_phone', 
                             'member_img',
-                            'remember_token',
                             'is_active'
                         ];
     protected $primaryKey = 'member_id';

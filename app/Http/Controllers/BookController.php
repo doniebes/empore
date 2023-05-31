@@ -149,8 +149,7 @@ class BookController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($book_id)
-    {
+    public function destroy($book_id){
         // Temukan buku berdasarkan ID
         // $book = Book::findOrFail($book_id);
 
