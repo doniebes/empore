@@ -162,7 +162,7 @@
 
             </div>
 
-          <a href="#">
+          <a href="{{ route('portal') }}">
 
             <div class="mb-5">
               <h2 class="display-6"><?//= $setting_school['setting_value'] ?></h2>

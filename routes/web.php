@@ -91,4 +91,4 @@ Route::get('/member/login', [MemberAuthController::class, 'showLoginForm'])->nam
 
 Route::get('/', function () {
     return view('portal');
-});
+})->name('portal');
