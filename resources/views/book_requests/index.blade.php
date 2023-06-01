@@ -68,7 +68,21 @@
 											<td>{{ $row->title }}</td>											
 											<td>{{ $row->request_date }}</td>
 											<td>{{ $row->book_request_id }}</td>
-											<td>{{ $row->approval_status }}</td>
+											<td>
+												<?php if($row->approval_status=='approved'){ ?>
+													<span class="badge bg-soft-success text-success">
+														<span class="legend-indicator bg-success"></span>approved
+													</span>
+												<?php }elseif($row->approval_status=='rejected'){ ?>
+													<span class="badge bg-soft-danger text-danger">
+														<span class="legend-indicator bg-danger"></span>rejected
+													</span>
+												<?php }elseif($row->approval_status=='pending'){ ?>
+													<span class="badge bg-soft-warning text-warning">
+														<span class="legend-indicator bg-warning"></span>pending
+													</span>
+												<?php } ?>
+											</td>
 											<td>
 												<?php if($row->approval_status =='pending') { ?>
 													<a href="{{ route('book_requests.request_approved', $row->book_request_id) }}" 

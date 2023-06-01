@@ -579,7 +579,7 @@ window.hs_config.gulpRGBA = (p1) => {
                                 data-bs-target="#navbarVerticalMenukeuangan" 
                                 aria-expanded="false" 
                                 aria-controls="navbarVerticalMenukeuangan">
-                                <i class="fa fa-money text-stock nav-icon"></i>
+                                <i class="fa fa-exchange text-stock nav-icon"></i>
                                 <span class="nav-link-title">Transaksi</span>
                             </a>
                             <div id="navbarVerticalMenukeuangan" 
@@ -601,7 +601,7 @@ window.hs_config.gulpRGBA = (p1) => {
                                     </div>
                                     <div class="nav-item">
                                         <a class="nav-link  " 
-                                            href="https://gomahad.dsbstudio.web.id/manage/payout" 
+                                            href="{{ route('book_returns.index') }}" 
                                             role="button"  
                                             data-bs-target="#navbarVerticalMenupayout" 
                                             aria-expanded="false" 
@@ -623,7 +623,7 @@ window.hs_config.gulpRGBA = (p1) => {
                                 data-bs-target="#navbarVerticalMenukepegawaian" 
                                 aria-expanded="false" 
                                 aria-controls="navbarVerticalMenukepegawaian">
-                                <i class="fa fa-suitcase text-stock nav-icon"></i>
+                                <i class="fa fa-table text-stock nav-icon"></i>
                                 <span class="nav-link-title">Master Data</span>
                             </a>
                             <div id="navbarVerticalMenukepegawaian" 

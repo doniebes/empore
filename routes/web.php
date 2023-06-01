@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\BookRequestController;
+use App\Http\Controllers\BookReturnController;
 
 // Route untuk menampilkan daftar buku
 Route::get('/books', [BookController::class, 'index'])->name('books.index');
@@ -44,18 +45,21 @@ Route::put('/members/{id}', [MemberController::class, 'update'])->name('members.
 Route::delete('/members/{id}', [MemberController::class, 'destroy'])->name('members.destroy');
 
 // Route book_requests
-Route::get('/book_requests', [BookRequestController::class, 'index'])->name('book_requests.index');
-Route::get('/book_requests/create', [BookRequestController::class, 'create'])->name('book_requests.create');
-Route::post('/book_requests', [BookRequestController::class, 'store'])->name('book_requests.store');
-Route::get('/book_requests/{id}', [BookRequestController::class, 'show'])->name('book_requests.show');
-Route::get('/book_requests/{id}/edit', [BookRequestController::class, 'edit'])->name('book_requests.edit');
-Route::put('/book_requests/{id}', [BookRequestController::class, 'update'])->name('book_requests.update');
-Route::delete('/book_requests/{id}', [BookRequestController::class, 'destroy'])->name('book_requests.destroy');
+Route::get('/book-requests', [BookRequestController::class, 'index'])->name('book_requests.index');
+Route::get('/book-requests/create', [BookRequestController::class, 'create'])->name('book_requests.create');
+Route::post('/book-requests', [BookRequestController::class, 'store'])->name('book_requests.store');
+Route::get('/book-requests/{id}', [BookRequestController::class, 'show'])->name('book_requests.show');
+Route::get('/book-requests/{id}/edit', [BookRequestController::class, 'edit'])->name('book_requests.edit');
+Route::put('/book-requests/{id}', [BookRequestController::class, 'update'])->name('book_requests.update');
+Route::delete('/book-requests/{id}', [BookRequestController::class, 'destroy'])->name('book_requests.destroy');
 
 // Route approve reject book request
 Route::get('/book-requests/{id}/request-approved', [BookRequestController::class, 'request_approved'])->name('book_requests.request_approved');
 Route::get('/book-requests/{id}/request-rejected', [BookRequestController::class, 'request_rejected'])->name('book_requests.request_rejected');
 
+// Route book_returns
+Route::get('/book-returns', [BookReturnController::class, 'index'])->name('book_returns.index');
+Route::post('/book-returns', [BookRequestController::class, 'index'])->name('book_returns.get_data');
 // Route::get('/book-requests/{id}/request-approved', 'BookRequestController@requestApproved')->name('book_requests.request_approved');
 
 // Route::get('/', function () {
