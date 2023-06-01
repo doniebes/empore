@@ -17,6 +17,9 @@ use App\Http\Controllers\BookController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\BookRequestController;
 use App\Http\Controllers\BookReturnController;
+use App\Http\Controllers\AdminAuthController;
+use App\Http\Controllers\MemberAuthController;
+use App\Http\Controllers\ProfileController;
 
 // Route untuk menampilkan daftar buku
 Route::get('/books', [BookController::class, 'index'])->name('books.index');
@@ -32,7 +35,6 @@ Route::get('/books/{id}/edit', [BookController::class, 'edit'])->name('books.edi
 Route::put('/books/{id}', [BookController::class, 'update'])->name('books.update');
 // Route untuk menghapus buku berdasarkan ID
 Route::delete('/books/{book_id}', [BookController::class, 'destroy'])->name('books.destroy');
-
 
 // MEMBERS ROUTE
 // Route untuk menampilkan daftar buku
@@ -60,16 +62,27 @@ Route::get('/book-requests/{id}/request-rejected', [BookRequestController::class
 // Route book_returns
 Route::get('/book-returns', [BookReturnController::class, 'index'])->name('book_returns.index');
 Route::post('/book-returns', [BookRequestController::class, 'index'])->name('book_returns.get_data');
-// Route::get('/book-requests/{id}/request-approved', 'BookRequestController@requestApproved')->name('book_requests.request_approved');
 
-// Route::get('/', function () {
-//     return view('welcome');
+
+// Admin Authentication Routes
+Route::group(['namespace' => 'App\Http\Controllers', 'prefix' => 'admin', 'middleware' => 'admin.auth'], function () {
+    Route::get('login', [AdminAuthController::class, 'showLoginForm'])->name('admin.login');
+    Route::post('login', [AdminAuthController::class, 'login'])->name('admin.login.post');
+});
+
+// Member Authentication Routes
+Route::group(['namespace' => 'App\Http\Controllers', 'prefix' => 'member', 'middleware' => 'member.auth'], function () {
+    Route::get('login', [MemberAuthController::class, 'showLoginForm'])->name('member.login');
+
+    Route::get('profile/{id}', [ProfileController::class, 'index'])->name('member.profile');
+});
+
+// // Your member-only routes here
+// Route::group(['middleware' => 'member.auth'], function () {
+// 
 // });
 
-// Route::group(['middleware' => 'auth'], function () {
-//     // Rute untuk anggota
-// });
 
-// Route::group(['middleware' => 'auth:admin'], function () {
-//     // Rute untuk admin
-// });
+Route::get('/', function () {
+    return view('portal');
+});
