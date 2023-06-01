@@ -13,9 +13,9 @@ class MemberAuthController extends Controller
     public function login(Request $request){
         $credentials = $request->only('email', 'password');
 
-        if (Auth::guard('admin')->attempt($credentials)) {
+        if (Auth::guard('member')->attempt($credentials)) {
             // Autentikasi sukses
-            return redirect()->intended(route('admin.dashboard'));
+            return redirect()->intended(route('member.dashboard'));
         }
 
         // Autentikasi gagal
@@ -23,7 +23,7 @@ class MemberAuthController extends Controller
     }
 
     public function logout(){
-        Auth::guard('admin')->logout();
+        Auth::guard('member')->logout();
         return redirect()->route('member.login');
     }
 }

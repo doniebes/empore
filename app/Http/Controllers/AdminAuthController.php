@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminAuthController extends Controller{
 
@@ -15,7 +16,7 @@ class AdminAuthController extends Controller{
 
         if (Auth::guard('admin')->attempt($credentials)) {
             // Autentikasi sukses
-            return redirect()->intended(route('admin.dashboard'));
+            return redirect()->intended(route('dashboard.admin'));
         }
 
         // Autentikasi gagal

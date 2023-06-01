@@ -208,15 +208,16 @@
           <div class="w-100 content-space-t-4 content-space-t-lg-2 content-space-b-1" style="max-width: 25rem;">
             <!-- Form -->
             <!-- <form class="js-validate needs-validation" novalidate> -->
-            <!-- <?//= form_open('manage/auth/login', array('class'=>'login100-form validate-form')); ?> -->
+            <form method="POST" action="{{ route('admin.login.post') }}">
+               @csrf
               <div class="text-center">
                 <div class="mb-5">
                   <h1 class="display-5">Admin Login</h1>
                   <?php //if ($this->session->flashdata('failed')) { ?>
-                    <br><br>
+                    <!-- <br><br>
                   <div class="alert alert-danger alert-dismissible" style="margin-top: -85px !important;">
                     <h5><i class="fa fa-close"></i> Email atau Password salah!</h5>
-                  </div>
+                  </div> -->
                   <?php  //}  ?>
                   <!-- <p>Don't have an account yet? <a class="link" href="authentication-signup-cover.html">Sign up here</a></p> -->
                 </div>
@@ -229,6 +230,9 @@
                 <label class="form-label" for="signinSrEmail">Your email</label>
                 <input type="email" class="form-control form-control-lg" name="email" id="signinSrEmail" tabindex="1" placeholder="email@address.com" aria-label="email@address.com" required>
                 <span class="invalid-feedback">Please enter a valid email address.</span>
+                @error('email')
+                    <span>{{ $message }}</span>
+                @enderror
               </div>
               <!-- End Form -->
 
@@ -237,7 +241,6 @@
                 <label class="form-label w-100" for="signupSrPassword" tabindex="0">
                   <span class="d-flex justify-content-between align-items-center">
                     <span>Password</span>
-                    <!-- <a class="form-label-link mb-0" href="authentication-reset-password-cover.html">Forgot Password?</a> -->
                   </span>
                 </label>
 
@@ -251,6 +254,9 @@
                   <a id="changePassTarget" class="input-group-append input-group-text" href="javascript:;">
                     <i id="changePassIcon" class="bi-eye"></i>
                   </a>
+                  @error('password')
+                      <span>{{ $message }}</span>
+                  @enderror
                 </div>
 
                 <span class="invalid-feedback">Please enter a valid password.</span>

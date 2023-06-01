@@ -22,6 +22,12 @@ class BookRequestController extends Controller
         return view('book_requests.index', compact('book_requests', 'title'));
     }
 
+    public function member(){
+        $book_requests = BookRequest::getBookRequestsAndBooks();
+        $title = 'Pengajuan Buku';
+        return view('book_requests.member', compact('book_requests', 'title'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *

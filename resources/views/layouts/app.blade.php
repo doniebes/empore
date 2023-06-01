@@ -511,7 +511,7 @@ window.hs_config.gulpRGBA = (p1) => {
                 <a class="dropdown-item" href="#">Profile &amp; account</a>
                 <div class="dropdown-divider"></div>
 
-                <a class="dropdown-item" href="#">Sign out</a>
+                <a class="dropdown-item" href="{{ route('admin.logout') }}">Sign out</a>
               </div>
             </div>
             <!-- End Account -->
@@ -557,7 +557,7 @@ window.hs_config.gulpRGBA = (p1) => {
 
                         <div class="nav-item">
                             <a class="nav-link   " 
-                                href="https://gomahad.dsbstudio.web.id/manage" role="button" 
+                                href="{{ route('dashboard.admin') }}" role="button" 
                                 data-bs-toggle="" 
                                 data-bs-target="#navbarVerticalMenudashboard" 
                                 aria-expanded="false" 
