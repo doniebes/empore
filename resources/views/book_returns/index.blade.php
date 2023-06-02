@@ -298,8 +298,8 @@
 					@method('POST')
 				<div class="modal-body">
 
-					<input type="hidden" class="form-control" name="period_id" value="<?= isset($f['n']) ? $f['n'] : '' ?>" readonly>
-					<input type="hidden" class="form-control" name="member_id" value="<?= isset($f['r']) ? $f['r'] : '' ?>" readonly>							
+					<input type="hidden" class="form-control" name="period_id" value="<?= isset($_GET['n']) ? $_GET['n'] : '' ?>" readonly>
+					<input type="hidden" class="form-control" name="member_id" value="<?= isset($_GET['r']) ? $_GET['r'] : '' ?>" readonly>							
 					
 					<div class="form-group mb-3" style="display:none">
 						<label>Borrow ID</label>

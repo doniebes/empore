@@ -68,7 +68,7 @@ Route::group(['namespace' => 'App\Http\Controllers', 'prefix' => 'admin', 'middl
     Route::get('/book-returns', [BookReturnController::class, 'index'])->name('book_returns.index');
     Route::post('/book-returns', [BookReturnController::class, 'index'])->name('book_returns.get_data');
     Route::post('/book-returns/proses', [BookReturnController::class, 'proses_return'])->name('book_returns.proses');
-
+    
     // Dasboard
     Route::get('/dashboard', [DashboardController::class, 'admin'])->name('dashboard.admin');
 
@@ -76,6 +76,7 @@ Route::group(['namespace' => 'App\Http\Controllers', 'prefix' => 'admin', 'middl
 
 // Member Authentication Routes
 Route::group(['namespace' => 'App\Http\Controllers', 'prefix' => 'member', 'middleware' => 'member.auth'], function () {
+    
     // Dasboard
     Route::get('/dashboard', [DashboardController::class, 'member'])->name('dashboard.member');
 
@@ -85,7 +86,6 @@ Route::group(['namespace' => 'App\Http\Controllers', 'prefix' => 'member', 'midd
 
     Route::get('/borrows', [BorrowController::class, 'index'])->name('borrows.member');
     
-
 });
 
 Route::get('/admin/login', [AdminAuthController::class, 'showLoginForm'])->name('admin.login');

@@ -57,10 +57,10 @@ class BookReturnController extends Controller
        
         if($book->save()){
             // Redirect ke halaman yang diinginkan setelah menyimpan data success
-            return redirect()->route('book_returns.get_data', ['n' => $period_id, 'r' => $member_id])->with('success', 'Data created successfully.');
+            return redirect()->route('book_returns.index', ['n' => $period_id, 'r' => $member_id])->with('success', 'Returned created successfully.');
         }else{
             // Redirect ke halaman yang diinginkan setelah menyimpan data failed
-            return redirect()->route('book_returns.get_data')->with('error', 'Data created failed.');
+            return redirect()->route('book_returns.index')->with('error', 'Data created failed.');
         }
         
 
