@@ -11,9 +11,9 @@
 
   <link rel="icon" type="image/png" href="<?= asset('img/favicon.png') ?>">
 
-  <link href="<?= asset('') ?>css/bootstrap.min.css" rel="stylesheet" />
-  <link href="<?= asset('') ?>css/font-awesome.min.css" rel="stylesheet" />
-  <link href="<?= asset('') ?>css/login.css" rel="stylesheet" />
+  <link href="<?= asset('css/bootstrap.min.css') ?>" rel="stylesheet" />
+  <link href="<?= asset('css/font-awesome.min.css') ?>" rel="stylesheet" />
+  <link href="<?= asset('css/login.css') ?>" rel="stylesheet" />
 </head>
 <body>
 
@@ -24,11 +24,11 @@
         <?php if (isset($setting_logo) AND $setting_logo['setting_value'] == NULL) { ?>
         <img src="<?= asset('img/logo.png') ?>" class="img-responsive">
         <?php } else { ?>
-        <img src="" class="img-responsive">
+        <img src="<?= asset('img/PT_EMPORE_HEZER_TAMA.png') ?>" class="img-responsive">
         <?php } ?>
       </div>
       <p class="merk"><span style="color: #2ABB9B">Sistem</span> Peminjaman Buku</p> 
-      <p class="school"></p> 
+      <p class="school">PT EMPORE HEZER TAMA</p> 
     </div>
     </a>
     <div class="col-md-7">

@@ -171,13 +171,15 @@
             <!-- List Checked -->
             <ul class="list-checked list-checked-lg list-checked-primary list-py-2">
               <li class="list-checked-item">
-                <span class="d-block fw-semibold mb-1">Simplify & eficiency</span>
-                Memudahkan Pengelolaan Pesantren dengan Efisien dan Terintegrasi
+                <span class="d-block fw-semibold mb-1">Login Admin</span>
+                Email : admin@admin.com <br>
+                Password : 123456
               </li>
 
               <li class="list-checked-item">
-                <span class="d-block fw-semibold mb-1">Transform Administration</span>
-                Transformasi Pesantren Lebih Mudah dan Terintegrasi dengan SIM Pesantren
+                <span class="d-block fw-semibold mb-1">Login User</span>
+                Username : [username] <br>
+                Password : 123456
               </li>
             </ul>
             <!-- End List Checked -->
@@ -213,12 +215,12 @@
               <div class="text-center">
                 <div class="mb-5">
                   <h1 class="display-5">Admin Login</h1>
-                  <?php //if ($this->session->flashdata('failed')) { ?>
-                    <!-- <br><br>
-                  <div class="alert alert-danger alert-dismissible" style="margin-top: -85px !important;">
-                    <h5><i class="fa fa-close"></i> Email atau Password salah!</h5>
-                  </div> -->
-                  <?php  //}  ?>
+                  @error('email')
+                    <div class="alert alert-danger alert-dismissible" style="margin-top: -85px !important;">
+                      <h5><i class="fa fa-close"></i>{{ $message }}</h5>
+                    </div>
+                  @enderror
+                  
                   <!-- <p>Don't have an account yet? <a class="link" href="authentication-signup-cover.html">Sign up here</a></p> -->
                 </div>
 
@@ -245,7 +247,7 @@
                 </label>
 
                 <div class="input-group input-group-merge" data-hs-validation-validate-class>
-                  <input type="password" class="js-toggle-password form-control form-control-lg" name="password" id="signupSrPassword" placeholder="8+ characters required" aria-label="8+ characters required" required minlength="5" data-hs-toggle-password-options='{
+                  <input type="password" class="js-toggle-password form-control form-control-lg" name="password" id="signupSrPassword" placeholder="6+ characters required" aria-label="6+ characters required" required minlength="5" data-hs-toggle-password-options='{
                            "target": "#changePassTarget",
                            "defaultClass": "bi-eye-slash",
                            "showClass": "bi-eye",
