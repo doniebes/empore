@@ -41,7 +41,6 @@ Route::group(['namespace' => 'App\Http\Controllers', 'prefix' => 'admin', 'middl
     Route::delete('/books/{book_id}', [BookController::class, 'destroy'])->name('books.destroy');
 
     // MEMBERS ROUTE
-    // Route untuk menampilkan daftar buku
     Route::get('/members', [MemberController::class, 'index'])->name('members.index');
     Route::get('/members/create', [MemberController::class, 'create'])->name('members.create');
     Route::post('/members', [MemberController::class, 'store'])->name('members.store');
@@ -75,20 +74,25 @@ Route::group(['namespace' => 'App\Http\Controllers', 'prefix' => 'admin', 'middl
 
 // Member Authentication Routes
 Route::group(['namespace' => 'App\Http\Controllers', 'prefix' => 'member', 'middleware' => 'member.auth'], function () {
-   
+     
     Route::get('/profile/{id}', [ProfileController::class, 'index'])->name('member.profile');
     Route::get('/book-requests', [BookRequestController::class, 'member'])->name('book_requests.member');
-    Route::get('/profile/{id}', [ProfileController::class, 'index'])->name('member.profile');
-});
+    // Route::get('/profile/{id}', [ProfileController::class, 'index'])->name('member.profile');
 
+    // Dasboard
+    Route::get('/dashboard/{id}', [DashboardController::class, 'member'])->name('dashboard.member');
+
+});
 
 Route::get('/admin/login', [AdminAuthController::class, 'showLoginForm'])->name('admin.login');
 Route::post('/admin/login', [AdminAuthController::class, 'login'])->name('admin.login.post');
 Route::get('/admin/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
 
 Route::get('/member/login', [MemberAuthController::class, 'showLoginForm'])->name('member.login');
+Route::post('/member/login', [MemberAuthController::class, 'login'])->name('member.login.post');
+Route::get('/member/logout', [MemberAuthController::class, 'logout'])->name('member.logout');
 
-
+// default route
 Route::get('/', function () {
     return view('portal');
 })->name('portal');

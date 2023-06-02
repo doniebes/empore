@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Member;
 
 class DashboardController extends Controller
 {
@@ -11,6 +12,13 @@ class DashboardController extends Controller
         // $greeting = $this->greeting();
         $title  = 'Dashboard';
         return view('dashboard.admin', compact('title'));
+    }
+
+    public function member($id=NULL){
+
+        $title  = 'Dashboard';
+        $member = Member::where('member_id', $id)->first();
+        return view('dashboard.member', compact('title', 'member'));
     }
 
 

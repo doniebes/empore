@@ -508,10 +508,10 @@ window.hs_config.gulpRGBA = (p1) => {
 
                 <div class="dropdown-divider"></div>
 
-                <a class="dropdown-item" href="#">Profile &amp; account</a>
+                <a class="dropdown-item" href="{{ route('member.profile', $member->member_id) }}">Profile &amp; account</a>
                 <div class="dropdown-divider"></div>
 
-                <a class="dropdown-item" href="#">Sign out</a>
+                <a class="dropdown-item" href="{{ route('member.logout') }}">Sign out</a>
               </div>
             </div>
             <!-- End Account -->

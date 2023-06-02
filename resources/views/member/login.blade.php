@@ -33,33 +33,32 @@
     </a>
     <div class="col-md-7">
       <div class="box">
-        {{--<?//= form_open('member/auth/login', array('class'=>'login100-form validate-form')); ?>--}}
-
-        <div class="col-md-12">
-          <p class="title-login">Member Login</p>
-          <?php //if ($this->session->flashdata('failed')) { ?>
-          <!-- <br><br>
-        <div class="alert alert-danger alert-dismissible" style="margin-top: -85px !important;">
-          <h5><i class="fa fa-close"></i> ID atau Password salah!</h5>
-        </div> -->
-        <?php  //}  ?>
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label>ID</label>
-                <input type="text" required="" autofocus="" name="member_id" placeholder="Masukan ID" class="form-control flat">
+        <form method="POST" action="{{ route('member.login.post') }}">
+          @csrf
+          <div class="col-md-12">
+            <p class="title-login">Member Login</p>
+            @error('email')
+              <div class="alert alert-danger alert-dismissible" style="margin-top: -85px !important;">
+                <h5><i class="fa fa-close"></i>{{ $message }}</h5>
+              </div>
+            @enderror
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Member ID</label>
+                  <input type="text" required="" autofocus="" name="username" placeholder="Masukan ID" class="form-control flat">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Password</label>
+                  <input type="password" required="" name="password" placeholder="Masukan password" class="form-control flat">
+                </div>
               </div>
             </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label>Password</label>
-                <input type="password" required="" name="password" placeholder="Masukan password" class="form-control flat">
-              </div>
-            </div>
+            <button type="submit" class="btn btn-login">Login</button>
           </div>
-          <button class="btn btn-login">Login</button>
-        </div>
-          </form>
+        </form>
       </div>
     </div>
   </div>

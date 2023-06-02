@@ -13,7 +13,8 @@ class AdminAuthController extends Controller{
 
     public function login(Request $request){
         $credentials = $request->only('email', 'password');
-
+        // print_r(Auth::guard('admin')->attempt($credentials));
+        // die;
         if (Auth::guard('admin')->attempt($credentials)) {
             // Autentikasi sukses
             return redirect()->intended(route('dashboard.admin'));
