@@ -19,5 +19,14 @@ class BookRequest extends Model{
                 ->get();
     }
 
+    public static function getBookRequestsAndBooksByMemberId($member_id){
+        return DB::table('book_requests')
+                ->leftJoin('books', 'book_requests.book_id', '=', 'books.book_id')
+                ->leftJoin('members', 'book_requests.member_id', '=', 'members.member_id')
+                ->select('book_requests.*', 'books.*', 'members.*')
+                ->where('book_requests.member_id',$member_id)
+                ->get();
+    }
+
 
 }

@@ -4,23 +4,32 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Member;
+use App\Models\BookRequest;
+use App\Models\Borrow;
+use App\Models\Book;
 
 class DashboardController extends Controller
 {
     public function admin(){
-        // $member = Member::where('member_id', $id)->first();
         // $greeting = $this->greeting();
+        $ttl_book_request = count(BookRequest::all());
+        $ttl_borrowed = count(Borrow::all());
+        $ttl_books = count(Book::all());
+        $ttl_members = count(Member::all());
         $title  = 'Dashboard';
-        return view('dashboard.admin', compact('title'));
+        return view('dashboard.admin', compact('title', 'ttl_book_request', 'ttl_borrowed', 'ttl_books', 'ttl_members'));
     }
 
-    public function member($id=NULL){
-
+    public function member(){
         $title  = 'Dashboard';
-        $member = Member::where('member_id', $id)->first();
-        return view('dashboard.member', compact('title', 'member'));
+        $member_id = auth()->guard('member')->user()->member_id;
+        $member = Member::where('member_id', $member_id)->first();
+        $ttl_book_request = count(BookRequest::all());
+        $ttl_borrowed = count(Borrow::all());
+        $ttl_books = count(Book::all());
+        $ttl_members = count(Member::all());
+        return view('dashboard.member', compact('title', 'member', 'ttl_book_request', 'ttl_borrowed', 'ttl_books', 'ttl_members'));
     }
-
 
     
     function greeting(){
@@ -35,7 +44,6 @@ class DashboardController extends Controller
             echo "Selamat Malam";
         }else echo "Waktu Salah";
     }
-    
     
     
 }

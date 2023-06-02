@@ -6,7 +6,7 @@
   <div class="page-header">
     <div class="row align-items-center">
       <div class="col-sm mb-2 mb-sm-0">
-        <h1 class="page-header-title">{{-- 'greeting' --}} {{-- ,<?//= ucfirst($this->session->userdata('a_name')); ?>. --}}</h1>
+        <h1 class="page-header-title">Hello {{ auth()->guard('member')->user()->member_name }}</h1>
         <p class="page-header-text">Berikut adalah statistik dashboard Anda hari ini.</p>
       </div>
       <!-- End Col -->
@@ -29,7 +29,7 @@
                 <div class="flex-grow-1 ms-lg-3">
                   <span class="d-block fs-6">Total Pengajuan</span>
                   <div class="d-flex align-items-center">
-                    <h3 class="mb-0"><?//= $book_request ?></h3>
+                    <h3 class="mb-0"><?= $ttl_book_request ?></h3>
                   </div>
                 </div>
               </div>
@@ -46,7 +46,7 @@
                 <div class="flex-grow-1 ms-lg-3">
                   <span class="d-block fs-6">Total Pengembalian</span>
                   <div class="d-flex align-items-center">
-                    <h3 class="mb-0"><?//= $borrowings ?></h3>
+                    <h3 class="mb-0"><?= $ttl_borrowed ?></h3>
                   </div>
                 </div>
               </div>
@@ -63,7 +63,7 @@
                 <div class="flex-grow-1 ms-lg-3">
                   <span class="d-block fs-6">Total Buku</span>
                   <div class="d-flex align-items-center">
-                    <h3 class="mb-0"><?//= $books ?></h3>
+                    <h3 class="mb-0"><?= $ttl_books ?></h3>
                   </div>
                 </div>
               </div>
@@ -80,7 +80,7 @@
                 <div class="flex-grow-1 ms-lg-3">
                   <span class="d-block fs-6">Total Anggota</span>
                   <div class="d-flex align-items-center">
-                    <h3 class="mb-0"><?//= $members ?></h3>
+                    <h3 class="mb-0"><?= $ttl_members ?></h3>
                   </div>
                 </div>
               </div>

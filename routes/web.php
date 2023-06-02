@@ -21,6 +21,7 @@ use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\MemberAuthController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\BorrowController;
 
 // Admin Authentication Routes
 Route::group(['namespace' => 'App\Http\Controllers', 'prefix' => 'admin', 'middleware' => 'admin.auth'], function () {
@@ -65,7 +66,8 @@ Route::group(['namespace' => 'App\Http\Controllers', 'prefix' => 'admin', 'middl
 
     // Route book_returns
     Route::get('/book-returns', [BookReturnController::class, 'index'])->name('book_returns.index');
-    Route::post('/book-returns', [BookRequestController::class, 'index'])->name('book_returns.get_data');
+    Route::post('/book-returns', [BookReturnController::class, 'index'])->name('book_returns.get_data');
+    Route::post('/book-returns/proses', [BookReturnController::class, 'proses_return'])->name('book_returns.proses');
 
     // Dasboard
     Route::get('/dashboard', [DashboardController::class, 'admin'])->name('dashboard.admin');
@@ -74,13 +76,15 @@ Route::group(['namespace' => 'App\Http\Controllers', 'prefix' => 'admin', 'middl
 
 // Member Authentication Routes
 Route::group(['namespace' => 'App\Http\Controllers', 'prefix' => 'member', 'middleware' => 'member.auth'], function () {
-     
+    // Dasboard
+    Route::get('/dashboard', [DashboardController::class, 'member'])->name('dashboard.member');
+
     Route::get('/profile/{id}', [ProfileController::class, 'index'])->name('member.profile');
     Route::get('/book-requests', [BookRequestController::class, 'member'])->name('book_requests.member');
-    // Route::get('/profile/{id}', [ProfileController::class, 'index'])->name('member.profile');
+    Route::post('/book-requests', [BookRequestController::class, 'addBookRequest'])->name('book_requests.add');
 
-    // Dasboard
-    Route::get('/dashboard/{id}', [DashboardController::class, 'member'])->name('dashboard.member');
+    Route::get('/borrows', [BorrowController::class, 'index'])->name('borrows.member');
+    
 
 });
 

@@ -26,7 +26,8 @@ class BookReturnController extends Controller
         $members    = Member::all();
         $member     = Member::where('member_id', $member_id)->first();
         $borrows    = Borrow::where('member_id', $member_id)->get();
-        $borrowed   = Borrow::where('status', 'borrowed')->get();
+        $borrowed   = Borrow::where('status', 'borrowed')
+                            ->where('member_id', $member_id)->get();
         $periods = Period::all();
 
         $title = 'Pengembalian Buku';
@@ -36,69 +37,33 @@ class BookReturnController extends Controller
                                                     'borrowed', 'members', 'title'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+    
+    function proses_return(Request $request) {    
+    
+        $period_id = $request->input('period_id');
+        $member_id = $request->input('member_id');
+    
+        $borrow = Borrow::find($request->input('borrow_id'));
+        $borrow->return_date = $request->input('return_date');
+        $borrow->borrow_note = $request->input('borrow_note');
+        $borrow->status = 'returned';
+        $borrow->save();
+    
+        /** update stock buku */   
+        $book_id = $request->input('book_id');
+        $book = Book::find($book_id);
+        $current_stock = $book->stock;
+        $book->stock = $current_stock+1;
+       
+        if($book->save()){
+            // Redirect ke halaman yang diinginkan setelah menyimpan data success
+            return redirect()->route('book_returns.get_data', ['n' => $period_id, 'r' => $member_id])->with('success', 'Data created successfully.');
+        }else{
+            // Redirect ke halaman yang diinginkan setelah menyimpan data failed
+            return redirect()->route('book_returns.get_data')->with('error', 'Data created failed.');
+        }
+        
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+      }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

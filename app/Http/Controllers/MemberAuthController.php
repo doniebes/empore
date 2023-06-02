@@ -62,8 +62,7 @@ class MemberAuthController extends Controller
             
             if (Auth::guard('member')->attempt($credentials)) {
                 // Autentikasi sukses
-                $member_id = Member::where('username', $request->input('username'))->first()->member_id;
-                return redirect()->intended(route('dashboard.member', $member_id));
+                return redirect()->intended(route('dashboard.member'));
             }
     
             // Autentikasi gagal

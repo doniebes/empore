@@ -1,191 +1,134 @@
 @extends('layouts.member')
 
 @section('content')
-<script type="text/javascript" src="{{ asset('js/jquery-migrate-3.0.0.min.js')}}"></script>
 <div class="">
 	<!-- Content Header (Page header) -->
 	<section class="content-header">
 		<!-- ========== Breadcrumbs Start ========== -->
-		<div class="card-header card-header-content-sm-between">
-			<h1 class="card-header-title mb-2 mb-sm-0">
-				<?= isset($title) ? '' . $title : null; ?>
-				<small>List</small>
-			</h1>
-			<!-- Nav -->
-			<ul class="nav nav-segment nav-fill">
-				<li class="nav-item">
-					<a class="nav-link " href="#" >Home</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link active "><?= isset($title) ? '' . $title : null; ?></a>
-				</li>
-			</ul>
-			<!-- End Nav -->
-		</div>
+		@include('layouts/breadcrumbs')
 		<!-- ========== Breadcrumbs End ========== -->
 	</section>
-	<div class="mt-2">
-		<div class="">
-			<button type="button" 
-					id="addBtn" 
+
+    <div class="mt-2">
+		<div class="card-header">
+            <button type="button" 
 					class="btn btn-primary btn-sm" 
 					data-bs-toggle="modal" 
-					data-bs-target="#addClass">
-					<i class="fa fa-plus"></i> Tambah Data
+					data-bs-target="#modalAddData">
+					<i class="fa fa-plus"></i> Tambah
 			</button>
 		</div>
 		<!-- /.card-header -->
 	</div>
+
+	<!-- Main content -->
 	<section class="content">
 		<div class="row">
 			<div class="col-xs-12">
-				<div class="card">					
+				<div class="card">		
 					<div class="card-body table-responsive">
 						<table id="dtable" class="table table-hover">
-							<thead class="bg-soft-dark">
-								<tr>
-									<th>No</th>
-									<th>Nama Anggota</th>
-									<th>Judul Buku</th>									
-									<th>Tanggal Pengajuan</th>
-									<th>#ID</th>
-									<th>Approval Status</th>
-									<th>Aksi</th>
-								</tr>
-							</thead>
-							<tbody>
-
-                            @if ($book_requests->isEmpty())
-                            <tr id="row">
-                                <td colspan="7" align="center">Data Kosong</td>
+							<thead class="thead-light">
+                            <tr>
+                                <th>No</th>	
+                                <th>Buku</th>
+                                <th>Tanggal Request</th>
+                                <th>Approval Status</th>
+                                <th>Actions</th>
                             </tr>
-                            @else
-									<?php $i=1 ?>
-                                    @foreach ($book_requests as $row)									
-										<tr>
-											<td><?= $i ?></td>
-											<td>{{ $row->member_name }}</td>
-											<td>{{ $row->title }}</td>											
-											<td>{{ $row->request_date }}</td>
-											<td>{{ $row->book_request_id }}</td>
-											<td>
-												<?php if($row->approval_status=='approved'){ ?>
-													<span class="badge bg-soft-success text-success">
-														<span class="legend-indicator bg-success"></span>approved
-													</span>
-												<?php }elseif($row->approval_status=='rejected'){ ?>
-													<span class="badge bg-soft-danger text-danger">
-														<span class="legend-indicator bg-danger"></span>rejected
-													</span>
-												<?php }elseif($row->approval_status=='pending'){ ?>
-													<span class="badge bg-soft-warning text-warning">
-														<span class="legend-indicator bg-warning"></span>pending
-													</span>
-												<?php } ?>
-											</td>
-											<td>
-												<?php if($row->approval_status =='pending') { ?>
-													<a href="{{ route('book_requests.request_approved', $row->book_request_id) }}" 
-														class="btn btn-xs btn-success" 
-														data-toggle="tooltip" title="Approved"><i class="fa fa-check"></i>
-													</a>
-													<a href="{{ route('book_requests.request_rejected', $row->book_request_id) }}" 
-														class="btn btn-xs btn-danger" 
-														data-toggle="tooltip" title="Rejected"><i class="fa fa-close"></i>
-													</a>
-												<?php } ?>
-											</td>	
-										</tr>
-											<?php $i++ ?>
-                                    @endforeach
-                            @endif 
-									</tbody>
-								</table>
-							</div>
-							<!-- /.card-body -->
-						</div>
-						<!-- /.card -->
+							</thead>
+							<tbody>    
+							<?php
+							if (!empty($book_requests)) {
+								$i = 1;
+								foreach ($book_requests as $row):
+							?>        
+							<tr>
+								<td><?= $i ?></td>
+								<td class="table-column-ps-0">
+								<a class="d-flex align-items-center" href="#">
+									<div class="flex-shrink-0">
+									<img class="avatar avatar-lg" src="<?= asset('') ?>front/assets/img/400x400/img22.jpg" alt="Image Description">
+									</div>
+									<div class="flex-grow-1 ms-3">
+									<h5 class="text-inherit mb-0"><?= $row->title ?></h5>
+									</div>
+								</a>
+								</td>
+								<td><?= $row->request_date ?></td>							
+								<td>
+									<?php if($row->approval_status=='approved'){ ?>
+										<span class="badge bg-soft-success text-success">
+											<span class="legend-indicator bg-success"></span>approved
+										</span>
+									<?php }elseif($row->approval_status=='rejected'){ ?>
+										<span class="badge bg-soft-danger text-danger">
+											<span class="legend-indicator bg-danger"></span>rejected
+										</span>
+									<?php }elseif($row->approval_status=='pending'){ ?>
+										<span class="badge bg-soft-warning text-warning">
+											<span class="legend-indicator bg-warning"></span>pending
+										</span>
+									<?php } ?>
+								</td>
+								<td>
+                                    <div class="btn-group" role="group">
+                                        <a class="btn btn-white btn-sm" 
+                                            data-bs-toggle="modal" 
+                                            data-bs-target="#viewDetail"
+                                            data-book_request_id="<?= $row->book_request_id ?>"
+                                            data-book_title="<?= $row->title ?>"
+                                            data-book_author="<?= $row->author ?>"
+                                            data-book_code="<?= $row->code ?>"
+                                            data-book_stock="<?= $row->stock ?>"
+                                            data-request_date="<?= $row->request_date ?>"
+                                            data-approval_status="<?= $row->approval_status ?>"
+                                            id="viewBtn<?= $row->book_request_id ?>" 
+                                            title="View">
+                                            <i class="bi-eye"></i> View
+                                        </a>
+                                       
+                                            <!-- Button Group -->
+                                            <div class="btn-group">
+                                            <button type="button" 
+                                                    class="btn btn-white btn-icon btn-sm dropdown-toggle dropdown-toggle-empty" 
+                                                    id="editDropdownBorrow" 
+                                                    data-bs-toggle="dropdown" 
+                                                    aria-expanded="false">
+                                            </button>
+                                            <div class="dropdown-menu dropdown-menu-end mt-1" aria-labelledby="editDropdownBorrow">
+                                                <a class="dropdown-item view-pdf" 
+                                                    href="#" data-href="<?= asset('manage/member/printPdf/' . $row->member_id) ?>" 
+                                                    target="_blank"><i class="bi-printer dropdown-item-icon"></i> Print
+                                                </a>															
+                                            </div>
+                                        </div>
+                                        <!-- End Button Group -->														
+                                    </div>
+								</td>
+							</tr>
+							<?php
+								$i++;
+								endforeach;
+								} else {
+							?>
+							<tr id="row">
+								<td colspan="5" align="center">Data Kosong</td>
+							</tr>
+							<?php } ?>							
+							</tbody>
+						</table>
 					</div>
-				</div>
-			</section>
-			<!-- /.content -->
-		</div>
 
-		<!-- Modal Add & Update Data-->
-		<div class="modal fade" id="addClass" role="dialog">
-			<div class="modal-dialog modal-sm">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h4 class="modal-title" id="titleBookForm">Tambah Data</h4>
-						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>						
-					</div>
-					<form action="{{ route('book_requests.store') }}" method="POST">
-					@csrf
-						@method('POST')
-				
-					<div class="modal-body">
-						<input type="hidden" name="book_id" id="book_id" class="form-control" readonly>
-						<div id="p_scents_class">
-							<div class="form-group mb-3">	
-								<label>Kode Buku</label>
-								<input type="text" name="code" id="code" class="form-control" placeholder="Contoh: B001" required>
-							</div>
-							<div class="form-group mb-3">	
-								<label>Judul Buku</label>
-								<input type="text" name="title" id="title" class="form-control" placeholder="Judul Buku" required>
-							</div>
-							<div class="form-group mb-3">	
-								<label>Tahun Terbit</label>
-								<input type="number" name="publication_year" id="publication_year" class="form-control" placeholder="Tahun Terbit" required>
-							</div>
-							<div class="form-group mb-3">	
-								<label>Penulis</label>
-								<input type="text" name="author" id="author" class="form-control" placeholder="Penulis" required>
-							</div>
-							<div class="form-group mb-3">	
-								<label>Stock</label>
-								<input type="number" name="stock" id="stock" class="form-control number" placeholder="Number Only" required>
-							</div>
-						</div>
-					</div>
-					<div class="modal-footer">
-						<button type="submit" class="btn btn-primary" id="btnBookForm">Tambah Data</button>
-						<button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
-					</div>
-					</form>
 				</div>
 			</div>
 		</div>
-		<!-- End Modal Add & Update Data -->
 
+	</section>
+</div>
 
-		<!-- Delete Data -->
-		<div class="modal fade" id="delModal">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">				
-						<h4 class="modal-title"><span class="fa fa-warning"></span> Konfirmasi Hapus</h4>
-						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-					</div>
-					<form action="{{ route('book_requests.destroy', $row->book_request_id) }}" method="POST">
-						@csrf
-						@method('DELETE')
-						<div class="modal-body">
-							<p>Apakah anda akan menghapus data ini ?</p>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-dark pull-left" data-bs-dismiss="modal">Close</button>
-							<button type="submit" class="btn btn-danger">Hapus</button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-		<!-- End Delete Data -->
-
-
-		 <!-- Modal View Detail-->
-		 <div class="modal fade" id="viewDetail" role="dialog">
+        <!-- Modal View Detail-->
+        <div class="modal fade" id="viewDetail" role="dialog">
 			<div class="modal-dialog modal-sm">
                 <div class="modal-content">
                     <!-- Header -->
@@ -200,13 +143,13 @@
                     <div class="modal-body p-sm-5">
 
                     <div class="mb-5">
-                        <h4 class="h2">Book Detail</h4>
+                        <h4 class="h2">Detail Pengajuan Buku</h4>
                     </div>
 
                         <!-- Media -->
                         <div class="d-flex">
                             <div class="flex-shrink-0">
-                            <img class="avatar avatar-lg" src="{{ asset('front/assets/img/400x400/img22.jpg') }}" alt="Image Description">
+                            <img class="avatar avatar-lg" src="<?= asset('') ?>front/assets/img/400x400/img22.jpg" alt="Image Description">
                             </div>
 
                             <div class="flex-grow-1 ms-4">
@@ -218,6 +161,28 @@
                                     <div class="d-flex align-items-center">									
                                         <div class="input-group">
                                             <input type="text" class="form-control" id="book_code" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mb-2">
+                                <label class="col-sm-6 col-form-label form-label">Request Date</label>
+                                <div class="col-sm-6">
+                                    <div class="d-flex align-items-center">									
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="request_date" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mb-2">
+                                <label class="col-sm-6 col-form-label form-label">Approval Status</label>
+                                <div class="col-sm-6">
+                                    <div class="d-flex align-items-center">									
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="approval_status" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -248,67 +213,123 @@
                             </div>
                         </div>
                         <!-- End Media -->
+
                     </div>
                     <!-- End Body -->
+
                 </div>
+
 			</div>
 		</div>
 		<!-- end view detail -->
-		
-	</div>
 
-<script>
-$(document).ready(function(){
-	$('#addBtn').click(function(){
-		$('#titleBookForm').text('Tambah Data'); // Set judul modal
-		$('#btnBookForm').text('Tambah Data');
-		$('#book_id').val('');
-		$('#code').val('');
-		$('#title').val('');
-		$('#publication_year').val('');
-		$('#author').val('');
-		$('#stock').val('');
-	});
-});
-</script>
+<!-- Modal Add Data -->
+<div class="modal fade" id="modalAddData" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Tambah Pengajuan Buku</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>						
+            </div>
+            <form action="{{ route('book_requests.add') }}" method="POST">
+			@csrf
+				@method('POST')
+            <div class="modal-body">
+                <input type="hidden" readonly name="member_id" class="form-control" value="<?= auth()->guard('member')->user()->member_id ?>">            
+                <input type="hidden" readonly name="approval_status" class="form-control" value="pending">            
+                
+                <div id="p_scents_class">
+                    <p>
+                        <div class="form-group mb-3">
+                            <label>Request Date</label>
+                            <div id="payoutFlatpickr" class="js-flatpickr flatpickr-custom input-group"
+                                data-hs-flatpickr-options='{
+                                    "appendTo": "#payoutFlatpickr",
+                                    "dateFormat": "Y-m-d",
+                                    "wrap": true
+                                }'>
+                                <div class="input-group-prepend input-group-text" data-bs-toggle>
+                                    <i class="bi-calendar-week"></i>
+                                </div>
+                                <input type="text" name="request_date" class="flatpickr-custom-form-control form-control" id="payoutFlatpickrLabel" placeholder="Select dates" data-input value="<?= date('Y-m-d') ?>" required>
+                            </div>
+                        </div> 
+                        <div class="form-group mb-3">
+                            <label>Nama Buku</label>
+                            <div class="tom-select-custom tom-select-custom-with-tags">
+                                <select class="js-select form-select" 
+                                        name="book_id" 
+                                        id="book_id"
+                                        data-hs-tom-select-options='{
+                                            "placeholder": "Select a book..."
+                                        }'>
+                                    <?php if (count($books)): ?>                                     
+                                    <?php foreach ($books as $row) : ?>                                           
+                                        <option value="<?= $row['book_id'] ?>" 
+                                                data-icon="<?= $row['book_id'] ?>"
+                                                data-option-template='<span class="d-flex align-items-center">
+                                                <img class="avatar avatar-xss avatar-circle me-2" src="<?= asset('') ?>front/assets/img/400x400/img22.jpg" alt="<?= $row['title'] ?>" />
+                                                                        <span class="text-truncate"> <?= $row['title'] ?></span>
+                                                                    </span>'>
+                                                <?= $row['title'] ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                    <?php endif; ?>  
+                                </select>
+                            </div>
+                        </div>     
+                        
+                        <div class="form-group mb-3">
+                            <label>Tanggal Pengembalian</label>
+                            <div id="returnDateFlatpickr" class="js-flatpickr flatpickr-custom input-group"
+                                data-hs-flatpickr-options='{
+                                    "appendTo": "#returnDateFlatpickr",
+                                    "dateFormat": "Y-m-d",
+                                    "wrap": true
+                                }'>
+                                <div class="input-group-prepend input-group-text" data-bs-toggle>
+                                    <i class="bi-calendar-week"></i>
+                                </div>
+                                <input type="text" 
+                                    name="return_date" 
+                                    class="flatpickr-custom-form-control form-control" 
+                                    id="returnDateFlatpickrLabel" 
+                                    placeholder="Select return date" 
+                                    data-input value="" required>
+                            </div>
+                        </div> 
+                    </p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Simpan</button>
+                <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
+            </div>
+		  </form>
+        </div>
+    </div>
+</div>
+<!-- End modal add data -->
+
 
 <script>
 $(document).ready(function(){
 	<?php foreach($book_requests as $row): ?>
-		$('#editBtn<?= $row->book_id;?>').click(function(){
-			$('#titleBookForm').text('Edit Data'); // Set judul modal
-			$('#btnBookForm').text('Edit Data');
-			var book_id = $(this).data('book_id');
-			var code = $(this).data('code');	
-			var title = $(this).data('title');	
-			var publication_year = $(this).data('publication_year');	
-			var author = $(this).data('author');	
-			var stock = $(this).data('stock');	
-			$('#book_id').val(book_id);
-			$('#code').val(code);
-			$('#title').val(title);
-			$('#publication_year').val(publication_year);
-			$('#author').val(author);
-			$('#stock').val(stock);
-		});
-	<?php endforeach; ?>
-});
-</script>
-
-<script>
-$(document).ready(function(){
-	<?php foreach($book_requests as $row): ?>
-		$('#viewBtn<?= $row->book_id ?>').click(function(){
-			var book_id = $(this).data('book_id');
+		$('#viewBtn<?= $row->book_request_id ?>').click(function(){
+			var book_request_id = $(this).data('book_request_id');
 			var book_title = $(this).data('book_title');	
             var book_author = $(this).data('book_author');	
             var book_stock = $(this).data('book_stock');	
             var book_code = $(this).data('book_code');	
-			$('#book_id').val(book_id);
+            var request_date = $(this).data('request_date');	
+            var approval_status = $(this).data('approval_status');	
+			$('#book_request_id').val(book_request_id);
 			$('#book_title').html(book_title);
             $('#book_author').val(book_author);
             $('#book_stock').val(book_stock);
             $('#book_code').val(book_code);
+            $('#request_date').val(request_date);
+            $('#approval_status').val(approval_status);
 		});
 	<?php endforeach; ?>
 });

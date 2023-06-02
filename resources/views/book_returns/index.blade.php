@@ -261,10 +261,10 @@
                                                         class="btn btn-success btn-xs" 
                                                         data-bs-toggle="modal" 
                                                         data-bs-target="#prosesReturned"
-                                                        data-borrowing_id="{{ $row->borrowing_id }}"
+                                                        data-borrow_id="{{ $row->borrow_id }}"
 														data-book_id="{{ $row->book_id }}"
-                                                        id="prosesBtn{{ $row->borrowing_id }}" 
-                                                        title="Edit Kelas"><i class="fa fa-check-circle"></i> Proses
+                                                        id="prosesBtn{{ $row->borrow_id }}" 
+                                                        title="Proses Returned"><i class="fa fa-check-circle"></i> Proses
                                                 	</button>
 												</td>
 											</tr>    
@@ -293,15 +293,17 @@
 					<h4 class="modal-title">Proses Pengembalian Buku</h4>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
-				<?//= form_open('manage/borrow/proses_return/', array('method'=>'post')); ?>
+				<form action="{{ route('book_returns.proses') }}" method="POST">
+				@csrf
+					@method('POST')
 				<div class="modal-body">
 
 					<input type="hidden" class="form-control" name="period_id" value="<?= isset($f['n']) ? $f['n'] : '' ?>" readonly>
 					<input type="hidden" class="form-control" name="member_id" value="<?= isset($f['r']) ? $f['r'] : '' ?>" readonly>							
 					
 					<div class="form-group mb-3" style="display:none">
-						<label>Borrowing ID</label>
-						<input type="text" class="form-control" name="borrowing_id" id="borrowing_id" readonly>
+						<label>Borrow ID</label>
+						<input type="text" class="form-control" name="borrow_id" id="borrowID" readonly>
 					</div>
 
 					<div class="form-group mb-3" style="display:none">
@@ -433,9 +435,9 @@ $(document).ready(function() {
 		$(".checkbox").prop('checked', $(this).prop("checked"));
 	});
 
-    function ambil_data(){
-        window.location.href = "{{ route('book_returns.get_data') }}";    
-    }
+    // function ambil_data(){
+    //     window.location.href = "{{ route('book_returns.get_data') }}";    
+    // }
 });
 </script>
 
@@ -487,11 +489,11 @@ $(function(){
 });
 
 	$(document).ready(function(){
-		@foreach($borrows as $row): 
+		@foreach($borrows as $row) 
 			$('#prosesBtn{{ $row->borrow_id }}').click(function(){
-				var borrowing_id = $(this).data('borrowing_id');
+				var borrow_id = $(this).data('borrow_id');
 				var book_id = $(this).data('book_id');
-				$('#borrowing_id').val(borrowing_id);
+				$('#borrowID').val(borrow_id);
 				$('#book_id').val(book_id);
 			});
 		@endforeach

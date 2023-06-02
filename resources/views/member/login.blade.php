@@ -45,8 +45,8 @@
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
-                  <label>Member ID</label>
-                  <input type="text" required="" autofocus="" name="username" placeholder="Masukan ID" class="form-control flat">
+                  <label>Username</label>
+                  <input type="text" required="" autofocus="" name="username" placeholder="Masukan Username" class="form-control flat">
                 </div>
               </div>
               <div class="col-md-6">

@@ -314,4 +314,13 @@ $(document).ready(function(){
 });
 </script>
 
+<script>
+$(document).ready(function() {
+  $('#dtable').DataTable({
+    // other DataTables configurations
+    order: [[6, 'desc']], // Set the initial order by column index and order direction
+  });
+});
+</script>
+
 @endsection

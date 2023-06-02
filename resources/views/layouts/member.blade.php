@@ -500,15 +500,15 @@ window.hs_config.gulpRGBA = (p1) => {
                       <img class="avatar-img" src="{{ asset('') }}img/user.png" alt="Image Description">
                     </div>
                     <div class="flex-grow-1 ms-3">
-                      <h5 class="mb-0"></h5>
-                      <p class="card-text text-body"></p>
+                      <h5 class="mb-0"><?= auth()->guard('member')->user()->username ?></h5>
+                      <p class="card-text text-body"><?= auth()->guard('member')->user()->member_name ?></p>
                     </div>
                   </div>
                 </div>
 
                 <div class="dropdown-divider"></div>
 
-                <a class="dropdown-item" href="{{ route('member.profile', $member->member_id) }}">Profile &amp; account</a>
+                <a class="dropdown-item" href="{{ route('member.profile', auth()->guard('member')->user()->member_id) }}">Profile &amp; account</a>
                 <div class="dropdown-divider"></div>
 
                 <a class="dropdown-item" href="{{ route('member.logout') }}">Sign out</a>
@@ -532,8 +532,8 @@ window.hs_config.gulpRGBA = (p1) => {
       <div class="navbar-vertical-footer-offset">
         <!-- Logo -->
         <a class="navbar-brand" href="#" aria-label="Gomahad">         
-            <span class="navbar-brand-logo h1 text-primary" data-hs-theme-appearance="default">E-PONPES</span>
-            <span class="navbar-brand-logo h1" data-hs-theme-appearance="dark">E-PONPES</span>
+            <span class="navbar-brand-logo h1 text-primary" data-hs-theme-appearance="default">MEMBER</span>
+            <span class="navbar-brand-logo h1" data-hs-theme-appearance="dark">MEMBER</span>
             <img class="navbar-brand-logo-mini" src="https://gomahad.dsbstudio.web.id/uploads/school/YAYASAN_AL-MUBAROK_(SDIT-SMPIT-MTS-SMA)2.png" alt="Logo" data-hs-theme-appearance="default">
             <img class="navbar-brand-logo-mini" src="https://gomahad.dsbstudio.web.id/uploads/school/YAYASAN_AL-MUBAROK_(SDIT-SMPIT-MTS-SMA)2.png" alt="Logo" data-hs-theme-appearance="dark">
         </a>
@@ -551,49 +551,8 @@ window.hs_config.gulpRGBA = (p1) => {
      <div class="navbar-vertical-content">
           <div id="navbarVerticalMenu" class="nav nav-pills nav-vertical card-navbar-nav">             
 
-                <!-- ========== Left Sidebar Start ========== -->          
-                <div class="nav-item">
-                    <a class="nav-link " href="#" 
-                        role="button" data-bs-target="#navbarVerticalMenudashboard" 
-                        aria-expanded="false" aria-controls="navbarVerticalMenudashboard">
-                        <i class="fa fa-th nav-icon"></i>
-                        <span class="nav-link-title">Dashboard</span>
-                    </a>
-                </div>
-              
-                <div class="nav-item">
-                      <a class="nav-link " 
-                        href="{{ route('member.profile', '') }}" 
-                        role="button" data-bs-target="#navbarVerticalMenudashboard" 
-                        aria-expanded="false" aria-controls="navbarVerticalMenudashboard">
-                        <i class="fa fa-user nav-icon"></i>
-                        <span class="nav-link-title">Profile</span>
-                      </a>
-                </div>
-
-                <div class="nav-item">
-                      <a class="nav-link" 
-                        href="#" 
-                        role="button" data-bs-target="#navbarVerticalMenuBookRequest" 
-                        aria-expanded="false" aria-controls="navbarVerticalMenuBookRequest">
-                        <i class="fa fa-paper-plane nav-icon"></i>
-                        <span class="nav-link-title">Book Request</span>
-                      </a>
-                </div>
-
-                <div class="nav-item">
-                      <a class="nav-link" 
-                        href="" 
-                        role="button" data-bs-target="#navbarVerticalMenuborrow" 
-                        aria-expanded="false" aria-controls="navbarVerticalMenuborrow">
-                        <i class="fa fa-book nav-icon"></i>
-                        <span class="nav-link-title">List Peminjaman</span>
-                      </a>
-                </div>
-
-                                 
-                                        
-                                        
+                <!-- ========== Left Sidebar Start ========== -->     
+                @include('layouts.menu_member')                                   
                 <!-- ========== Left Sidebar End ========== -->                     
 
            </div>

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\BookRequest;
 use App\Models\Book;
 use App\Models\Borrow;
+use App\Models\Member;
 use Illuminate\Support\Facades\Session;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -22,11 +23,57 @@ class BookRequestController extends Controller
         return view('book_requests.index', compact('book_requests', 'title'));
     }
 
+    /**
+     * method for panel member
+     */
     public function member(){
-        $book_requests = BookRequest::getBookRequestsAndBooks();
         $title = 'Pengajuan Buku';
-        return view('book_requests.member', compact('book_requests', 'title'));
+
+        // get session data from guard member
+        $member_id = auth()->guard('member')->user()->member_id;
+        $books = Book::all();
+        $book_requests = BookRequest::getBookRequestsAndBooksByMemberId($member_id);
+        // $book_requests = BookRequest::where('member_id', $member_id)->get();
+        // print_r($book_requests);
+        $member = Member::where('member_id', $member_id)->first();
+        return view('book_requests.member', compact('title', 'book_requests', 'member', 'books'));
     }
+
+    public function addBookRequest(Request $request){
+        // Validasi data yang diterima dari formulir
+        $validatedData = $request->validate([
+            'book_id' => 'required',
+            'request_date' => 'required',
+            'return_date' => 'required',
+            'member_id' => 'required',
+            'approval_status' => 'required'
+        ]);
+
+          // Simpan data buku ke dalam database
+          $created = BookRequest::create($validatedData);
+
+          if($created){
+            /**add transaksi borrowings */
+            $borrow_data = array(
+              'book_request_id' => $created->book_request_id,
+              'member_id' => $request->input('member_id'),
+              'book_id' => $request->input('book_id'),
+              'status' => 'pending'
+            );
+  
+            $add_borrowings = Borrow::create($borrow_data);
+          }
+
+          if($created){
+              // Redirect ke halaman yang diinginkan setelah menyimpan data success
+              return redirect()->route('book_requests.member')->with('success', 'Data created successfully.');
+          }else{
+              // Redirect ke halaman yang diinginkan setelah menyimpan data failed
+              return redirect()->route('book_requests.member')->with('error', 'Data created failed.');
+          }
+    }
+
+    ##################################### End method panel member #################################
 
     /**
      * Show the form for creating a new resource.

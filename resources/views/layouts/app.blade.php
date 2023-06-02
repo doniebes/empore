@@ -488,7 +488,7 @@ window.hs_config.gulpRGBA = (p1) => {
             <div class="dropdown">
               <a class="navbar-dropdown-account-wrapper" href="javascript:;" id="accountNavbarDropdown" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside" data-bs-dropdown-animation>
                 <div class="avatar avatar-sm avatar-circle">
-                  <img class="avatar-img" src="{{ asset('') }}img/user.png" alt="Image Description">
+                  <img class="avatar-img" src="{{ asset('img/user.png') }}" alt="Image Description">
                   <span class="avatar-status avatar-sm-status avatar-status-success"></span>
                 </div>
               </a>
@@ -497,11 +497,11 @@ window.hs_config.gulpRGBA = (p1) => {
                 <div class="dropdown-item-text">
                   <div class="d-flex align-items-center">
                     <div class="avatar avatar-sm avatar-circle">
-                      <img class="avatar-img" src="{{ asset('') }}img/user.png" alt="Image Description">
+                      <img class="avatar-img" src="{{ asset('img/user.png') }}" alt="Image Description">
                     </div>
                     <div class="flex-grow-1 ms-3">
-                      <h5 class="mb-0"></h5>
-                      <p class="card-text text-body"></p>
+                      <h5 class="mb-0">{{ auth()->guard('admin')->user()->name }}</h5>
+                      <p class="card-text text-body">{{ auth()->guard('admin')->user()->email }}</p>
                     </div>
                   </div>
                 </div>
@@ -532,11 +532,18 @@ window.hs_config.gulpRGBA = (p1) => {
       <div class="navbar-vertical-footer-offset">
         <!-- Logo -->
         <a class="navbar-brand" href="#" aria-label="Gomahad">         
-            <span class="navbar-brand-logo h1 text-primary" data-hs-theme-appearance="default">E-PONPES</span>
+            <!-- <span class="navbar-brand-logo h1 text-primary" data-hs-theme-appearance="default">E-PONPES</span>
             <span class="navbar-brand-logo h1" data-hs-theme-appearance="dark">E-PONPES</span>
             <img class="navbar-brand-logo-mini" src="https://gomahad.dsbstudio.web.id/uploads/school/YAYASAN_AL-MUBAROK_(SDIT-SMPIT-MTS-SMA)2.png" alt="Logo" data-hs-theme-appearance="default">
-            <img class="navbar-brand-logo-mini" src="https://gomahad.dsbstudio.web.id/uploads/school/YAYASAN_AL-MUBAROK_(SDIT-SMPIT-MTS-SMA)2.png" alt="Logo" data-hs-theme-appearance="dark">
+            <img class="navbar-brand-logo-mini" src="https://gomahad.dsbstudio.web.id/uploads/school/YAYASAN_AL-MUBAROK_(SDIT-SMPIT-MTS-SMA)2.png" alt="Logo" data-hs-theme-appearance="dark"> -->
+        
+            <img class="navbar-brand-logo" src="<?= asset('img/PT_EMPORE_HEZER_TAMA.png') ?>" alt="Logo" data-hs-theme-appearance="default"> 
+            <img class="navbar-brand-logo" style="filter: brightness(0%) invert(100%);" src="<?= asset('img/PT_EMPORE_HEZER_TAMA.png') ?>" alt="Logo" data-hs-theme-appearance="dark">
+            <img class="navbar-brand-logo-mini" src="<?= asset('img/PT_EMPORE_HEZER_TAMA.png') ?>" alt="Logo" data-hs-theme-appearance="default">
+            <img class="navbar-brand-logo-mini" style="filter: brightness(0%) invert(100%);" src="<?= asset('img/PT_EMPORE_HEZER_TAMA.png') ?>" alt="Logo" data-hs-theme-appearance="dark">
         </a>
+
+            
         <!-- End Logo -->
 
         <!-- Navbar Vertical Toggle -->
@@ -544,7 +551,6 @@ window.hs_config.gulpRGBA = (p1) => {
           <i class="bi-arrow-bar-left navbar-toggler-short-align" data-bs-template='<div class="tooltip d-none d-md-block" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>' data-bs-toggle="tooltip" data-bs-placement="right" title="Collapse"></i>
           <i class="bi-arrow-bar-right navbar-toggler-full-align" data-bs-template='<div class="tooltip d-none d-md-block" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>' data-bs-toggle="tooltip" data-bs-placement="right" title="Expand"></i>
         </button>
-
         <!-- End Navbar Vertical Toggle -->
 
      <!-- Content -->
