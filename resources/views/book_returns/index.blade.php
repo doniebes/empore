@@ -34,7 +34,7 @@
 						<form id="searchForm" action="{{ route('book_returns.get_data') }}" method="GET">
 
 						<div class="row mb-2">
-							<label class="col-sm-3 col-form-label form-label">Tahun Ajaran</label>
+							<label class="col-sm-3 col-form-label form-label">Periode</label>
 							<div class="col-sm-4">
 								<div class="d-flex align-items-center">									
 									<select class="form-control form-select" name="n" id="th_ajar" >
@@ -102,14 +102,14 @@
 									<table class="table table-striped">
 										<tbody>
 											<tr>
-												<td width="200">Tahun Ajaran</td><td width="4">:</td>
-												@foreach ($periods as $row): 
+												<td width="200">Periode</td><td width="4">:</td>
+												@foreach ($periods as $row) 
 													<?= (isset($_GET['n']) AND $_GET['n'] == $row->period_id) ? 
 													'<td><strong>'.$row->period_start.'/'.$row->period_end.'<strong></td>' : '' ?> 
 												@endforeach
 											</tr>
 											<tr>
-												<td>ID</td>
+												<td>Member ID</td>
 												<td>:</td>
 												<?= (isset($_GET['r']) AND $_GET['r'] == $member->member_id) ? 
 												'<td>'.$member->member_id.'</td>' : '' ?> 
@@ -149,7 +149,7 @@
 									</thead>
 									<tbody>
 									 
-                                    @foreach ($borrows as $row): 
+                                    @foreach ($borrows as $row) 
 									<tr>
 										<td>{{ $row->book_request_id }}</td>
 										<td>{{ $row->title }}</td>
