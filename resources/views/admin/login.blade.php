@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <!-- Title -->
-  <title> <?= isset($title) ? ' | ' . $title : null; ?></title>
+  <title>Login Admin</title>
 
   <!-- Favicon -->
   <link rel="shortcut icon" href="<?= asset('img/favicon.png') ?>">
@@ -154,15 +154,16 @@
           </div>
           <!-- End Logo & Language -->
 
-      
+          
           <div style="max-width: 23rem;">
-            <div class="text-center mb-5">
-              <img class="img-fluid" src="<?= asset('') ?>front/assets/svg/illustrations/oc-chatting.svg" alt="Image Description" style="width: 12rem;" data-hs-theme-appearance="default">
-              <img class="img-fluid" src="<?= asset('') ?>front/assets/svg/illustrations-light/oc-chatting.svg" alt="Image Description" style="width: 12rem;" data-hs-theme-appearance="dark">
+            <a href="{{ route('portal') }}">
+              <div class="text-center mb-5">
+                <img class="img-fluid" src="<?= asset('') ?>front/assets/svg/illustrations/oc-chatting.svg" alt="Image Description" style="width: 12rem;" data-hs-theme-appearance="default">
+                <img class="img-fluid" src="<?= asset('') ?>front/assets/svg/illustrations-light/oc-chatting.svg" alt="Image Description" style="width: 12rem;" data-hs-theme-appearance="dark">
 
-            </div>
-
-          <a href="{{ route('portal') }}">
+              </div>
+            </a>
+          
 
             <div class="mb-5">
               <h2 class="display-6"><?//= $setting_school['setting_value'] ?></h2>
@@ -176,11 +177,11 @@
                 Password : 123456
               </li>
 
-              <li class="list-checked-item">
+              <!-- <li class="list-checked-item">
                 <span class="d-block fw-semibold mb-1">Login User</span>
                 Username : [username] <br>
                 Password : 123456
-              </li>
+              </li> -->
             </ul>
             <!-- End List Checked -->
            
@@ -199,7 +200,7 @@
             <!-- End Row -->
           
             
-          </a>
+         
 
           </div>
         </div>

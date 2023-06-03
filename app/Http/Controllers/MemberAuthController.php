@@ -11,7 +11,8 @@ use Illuminate\Support\Facades\Hash;
 class MemberAuthController extends Controller
 {
     public function showLoginForm(){
-        return view('member.login');
+        $members = Member::take(5)->get();
+        return view('member.login', compact('members'));
     }
 
     public function login(Request $request){

@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <!-- Title -->
-  <title><?= isset($title) ? ' | ' . $title : null; ?></title>
+  <title>Aplikasi Peminjaman Buku</title>
 
   <!-- Favicon -->
   <link rel="shortcut icon" href="{{ asset('img/favicon.png') }}">
@@ -262,10 +262,46 @@
       <!-- End Row -->
     </div>
     <!-- End Card Grid -->
-
     
   </main>
   <!-- ========== END MAIN CONTENT ========== -->
+ 
+
+
+  
+    
+<!-- modal start  -->
+<div class="modal fade" id="myModalPengumuman" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header ">
+        <h2 class="modal-title" id="myModalLabel">
+          <i class="bi bi-envelope"></i> &nbsp; Info
+        </h2>
+        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+            <div class="popup">
+
+              <p>Sebelum menggunakan aplikasi, pastikan untuk mengunduh file SQL dari <a href="{{ asset('db/empore.sql') }}">tautan berikut</a> dan mengimpornya ke database.</p>
+
+              <p>Jika ada kendala silahkan hubungi ke nomor berikut : <br>                
+                <a href="https://api.whatsapp.com/send?phone=6281286479731">+62 812-8647-9731.</a>
+              </p>
+              <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn btn-soft-dark"> 
+                  <span>Tutup</span> 
+                </button>
+              </div>
+            </div>
+
+        </div>                                   
+      </div>
+    </div>
+  </div>
+</div>
+<!-- modal end -->
 
   <!-- ========== FOOTER ========== -->
   <footer class="container-lg text-center py-10">
@@ -293,6 +329,12 @@
   </footer>
   <!-- ========== END FOOTER ========== -->
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+  $('#myModalPengumuman').modal('show');
+</script>
 
   <!-- JS Implementing Plugins -->
   <script src="{{ asset('') }}front/assets/js/vendor.min.js"></script>
@@ -381,6 +423,9 @@
       })()
     </script>
 
+
+
   <!-- End Style Switcher JS -->
 </body>
 </html>
+
