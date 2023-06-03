@@ -24,10 +24,14 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\BorrowController;
 use App\Http\Controllers\ApiController;
 
+
  // Route untuk menampilkan daftar buku
  Route::get('/api/books', [ApiController::class, 'get_books'])->name('api.books');
-//  Route::get('/api/books/{id}', [ApiController::class, 'book_by_id'])->name('api.books');
- Route::get('/api/books/{code}', [ApiController::class, 'book_by_code'])->name('api.books');
+ //  Route::get('/api/books/{id}', [ApiController::class, 'book_by_id'])->name('api.books');
+ Route::get('/api/books/{code}', [ApiController::class, 'book_bycode'])->name('api.books');
+ Route::post('/api/books', [ApiController::class, 'post_books'])->name('api.post_books');
+ Route::put('/api/books/{code}', [ApiController::class, 'put_books'])->name('api.put_books');
+ Route::delete('/api/books/{code}', [ApiController::class, 'delete_books'])->name('api.delete_books');
 
 // Admin Authentication Routes
 Route::group(['namespace' => 'App\Http\Controllers', 'prefix' => 'admin', 'middleware' => 'admin.auth'], function () {

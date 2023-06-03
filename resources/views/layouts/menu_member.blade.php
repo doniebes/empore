@@ -1,5 +1,6 @@
 <div class="nav-item">
-    <a class="nav-link " href="{{ route('dashboard.member') }}" 
+    <a class="nav-link <?= (request()->segment(2)=='dashboard') ? 'active' : '' ?>" 
+        href="{{ route('dashboard.member') }}" 
         role="button" data-bs-target="#navbarVerticalMenudashboard" 
         aria-expanded="false" aria-controls="navbarVerticalMenudashboard">
         <i class="fa fa-th nav-icon"></i>
@@ -8,7 +9,7 @@
 </div>
 
 <div class="nav-item">
-        <a class="nav-link " 
+        <a class="nav-link <?= (request()->segment(2)=='profile') ? 'active' : '' ?>" 
         href="{{ route('member.profile', auth()->guard('member')->user()->member_id) }}" 
         role="button" data-bs-target="#navbarVerticalMenudashboard" 
         aria-expanded="false" aria-controls="navbarVerticalMenudashboard">
@@ -18,7 +19,7 @@
 </div>
 
 <div class="nav-item">
-        <a class="nav-link" 
+        <a class="nav-link <?= (request()->segment(2)=='book-requests') ? 'active' : '' ?>" 
         href="{{ route('book_requests.member') }}" 
         role="button" data-bs-target="#navbarVerticalMenuBookRequest" 
         aria-expanded="false" aria-controls="navbarVerticalMenuBookRequest">
@@ -28,7 +29,7 @@
 </div>
 
 <div class="nav-item">
-        <a class="nav-link" 
+        <a class="nav-link <?= (request()->segment(2)=='borrows') ? 'active' : '' ?>" 
         href="{{ route('borrows.member') }}" 
         role="button" data-bs-target="#navbarVerticalMenuborrow" 
         aria-expanded="false" aria-controls="navbarVerticalMenuborrow">

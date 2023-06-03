@@ -285,10 +285,11 @@
             <div class="popup">
 
               <p>Sebelum menggunakan aplikasi, pastikan untuk mengunduh file SQL dari <a href="{{ asset('db/empore.sql') }}">tautan berikut</a> dan mengimpornya ke database.</p>
-
+              
               <p>Jika ada kendala silahkan hubungi ke nomor berikut : <br>                
                 <a href="https://api.whatsapp.com/send?phone=6281286479731">+62 812-8647-9731.</a>
               </p>
+              <p><small>Note : Gunakan PHP versi 7.3 atau yang lebih baru</small></p>
               <div class="modal-footer">
                 <button type="button" data-dismiss="modal" class="btn btn-soft-dark"> 
                   <span>Tutup</span> 
