@@ -33,6 +33,9 @@
 					data-bs-target="#addClass">
 					<i class="fa fa-plus"></i> Tambah Data
 			</button>
+			<a href="{{ route('books.ajaxpost') }}" 
+				class="btn btn-sm btn-success"><i class="fa fa-plus"></i> Jquery Ajax POST
+			</a>
 		</div>
 		<!-- /.card-header -->
 	</div>

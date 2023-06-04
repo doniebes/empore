@@ -46,7 +46,10 @@ class ApiController extends Controller
         $book = Book::create($validatedData);
 
         // Return a JSON response with the newly created book
-        return response()->json(['data' => $book], 201);
+        return response()->json(['status' => TRUE,
+                                 'message' => 'Success insert data',
+                                 'data' => $book
+                                ], 201);
     }
 
     public function put_books(Request $request, $code)

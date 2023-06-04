@@ -25,7 +25,7 @@ use App\Http\Controllers\BorrowController;
 use App\Http\Controllers\ApiController;
 
 
- // Route untuk menampilkan daftar buku
+ // Route API
  Route::get('/api/books', [ApiController::class, 'get_books'])->name('api.books');
  //  Route::get('/api/books/{id}', [ApiController::class, 'book_by_id'])->name('api.books');
  Route::get('/api/books/{code}', [ApiController::class, 'book_bycode'])->name('api.books');
@@ -36,22 +36,16 @@ use App\Http\Controllers\ApiController;
 // Admin Authentication Routes
 Route::group(['namespace' => 'App\Http\Controllers', 'prefix' => 'admin', 'middleware' => 'admin.auth'], function () {
     
-    // Route untuk menampilkan daftar buku
+    // Route books
     Route::get('/books', [BookController::class, 'index'])->name('books.index');
-    // Route untuk menampilkan formulir tambah buku
-    Route::get('/books/create', [BookController::class, 'create'])->name('books.create');
-    // Route untuk menyimpan buku baru
+    Route::get('/books/ajax-post', [BookController::class, 'ajaxpost'])->name('books.ajaxpost');
     Route::post('/books', [BookController::class, 'store'])->name('books.store');
-    // Route untuk menampilkan informasi buku berdasarkan ID
     Route::get('/books/{id}', [BookController::class, 'show'])->name('books.show');
-    // Route untuk menampilkan formulir edit buku berdasarkan ID
     Route::get('/books/{id}/edit', [BookController::class, 'edit'])->name('books.edit');
-    // Route untuk mengupdate buku berdasarkan ID
     Route::put('/books/{id}', [BookController::class, 'update'])->name('books.update');
-    // Route untuk menghapus buku berdasarkan ID
     Route::delete('/books/{book_id}', [BookController::class, 'destroy'])->name('books.destroy');
 
-    // MEMBERS ROUTE
+    // Route members
     Route::get('/members', [MemberController::class, 'index'])->name('members.index');
     Route::get('/members/create', [MemberController::class, 'create'])->name('members.create');
     Route::post('/members', [MemberController::class, 'store'])->name('members.store');
@@ -59,7 +53,6 @@ Route::group(['namespace' => 'App\Http\Controllers', 'prefix' => 'admin', 'middl
     Route::get('/members/{id}/edit', [MemberController::class, 'edit'])->name('members.edit');
     Route::put('/members/{id}', [MemberController::class, 'update'])->name('members.update');
     Route::delete('/members/{id}', [MemberController::class, 'destroy'])->name('members.destroy');
-
 
     // Route book_requests
     Route::get('/book-requests', [BookRequestController::class, 'index'])->name('book_requests.index');
@@ -89,11 +82,9 @@ Route::group(['namespace' => 'App\Http\Controllers', 'prefix' => 'member', 'midd
     
     // Dasboard
     Route::get('/dashboard', [DashboardController::class, 'member'])->name('dashboard.member');
-
     Route::get('/profile/{id}', [ProfileController::class, 'index'])->name('member.profile');
     Route::get('/book-requests', [BookRequestController::class, 'member'])->name('book_requests.member');
     Route::post('/book-requests', [BookRequestController::class, 'addBookRequest'])->name('book_requests.add');
-
     Route::get('/borrows', [BorrowController::class, 'index'])->name('borrows.member');
     
 });

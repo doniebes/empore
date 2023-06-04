@@ -16,7 +16,6 @@ class BookController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-
         $books = Book::all();
         $title = 'Buku';
         return view('books.index', compact('books', 'title'));
@@ -27,8 +26,10 @@ class BookController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(){
-        return view('books.form');
+    public function ajaxpost(){
+        // return view('books.form');
+        $title = 'JQuery Ajax POST via API';
+        return view('books.ajaxpost', compact('title'));
     }
 
     /**
@@ -150,12 +151,8 @@ class BookController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($book_id){
-        // Temukan buku berdasarkan ID
-        // $book = Book::findOrFail($book_id);
 
-         // Temukan buku berdasarkan slug
-         // $book = Book::where('book_id', $book_id)->first();
-         $book = $book = Book::find($book_id);
+        $book = $book = Book::find($book_id);
 
           // Hapus buku dari database
         if ($book) {
