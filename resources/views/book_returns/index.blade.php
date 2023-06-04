@@ -185,9 +185,9 @@
 								<h3 class="card-title">Cetak Riwayat Transaksi</h3>
 							</div><!-- /.card-header -->
 							<div class="card-body">
-								<form action="<?//= site_url('manage/borrow/borrow_summary') ?>" method="GET" class="view-pdf">
-									<input type="hidden" name="n" value="<?//= $f['n'] ?>">
-									<input type="hidden" name="r" value="<?//= $f['r'] ?>">
+								<form action="{{ route('book_returns.summary_pdf') }}" method="GET" class="view-pdf">
+									<input type="hidden" name="n" value="<?= $_GET['n'] ?>">
+									<input type="hidden" name="r" value="<?= $_GET['r'] ?>">
 									<div class="mb-4">
 										<label class="h5">Tanggal Transaksi</label>										
 

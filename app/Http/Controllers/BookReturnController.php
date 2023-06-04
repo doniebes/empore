@@ -10,6 +10,7 @@ use App\Models\Member;
 use App\Models\Period;
 use Illuminate\Support\Facades\Session;
 use RealRashid\SweetAlert\Facades\Alert;
+use PDF;
 
 class BookReturnController extends Controller
 {
@@ -62,8 +63,25 @@ class BookReturnController extends Controller
             // Redirect ke halaman yang diinginkan setelah menyimpan data failed
             return redirect()->route('book_returns.index')->with('error', 'Data created failed.');
         }
-        
 
       }
+
+      function summary_pdf() {
+              
+        $period = Period::all();
+        $member = Member::where('member_id', $_GET['r'])->get()->first();
+        $borrow = Borrow::getBorrowAndBooksByMemberIdAndReturnDate($_GET['r'], $_GET['d']);
+        
+        $setting_district   = 'Jakarta'; 
+        $setting_name       = 'PT EMPORE HEZER TAMA'; 
+        $setting_address    = 'Metropolitan tower, level13-A'; 
+        $setting_phone      = '+62 21 2955 7450'; 
+    
+        $pdf = PDF::loadView('book_returns.summary_pdf', compact('setting_district', 'period', 'borrow',
+        'member', 'setting_name', 'setting_address', 'setting_phone'));
+
+        return $pdf->stream('RIWAYAT_TRANSAKSI.pdf');
+
+     }
 
 }

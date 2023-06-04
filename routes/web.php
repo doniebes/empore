@@ -71,8 +71,9 @@ Route::group(['namespace' => 'App\Http\Controllers', 'prefix' => 'admin', 'middl
     Route::get('/book-returns', [BookReturnController::class, 'index'])->name('book_returns.index');
     Route::post('/book-returns', [BookReturnController::class, 'index'])->name('book_returns.get_data');
     Route::post('/book-returns/proses', [BookReturnController::class, 'proses_return'])->name('book_returns.proses');
-    
-    // Dasboard
+    Route::get('/book-returns/summary-pdf', [BookReturnController::class, 'summary_pdf'])->name('book_returns.summary_pdf');
+
+    // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'admin'])->name('dashboard.admin');
 
 });
@@ -80,7 +81,7 @@ Route::group(['namespace' => 'App\Http\Controllers', 'prefix' => 'admin', 'middl
 // Member Authentication Routes
 Route::group(['namespace' => 'App\Http\Controllers', 'prefix' => 'member', 'middleware' => 'member.auth'], function () {
     
-    // Dasboard
+    // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'member'])->name('dashboard.member');
     Route::get('/profile/{id}', [ProfileController::class, 'index'])->name('member.profile');
     Route::get('/book-requests', [BookRequestController::class, 'member'])->name('book_requests.member');
